@@ -610,6 +610,11 @@ span.steps{cursor:default}
 .sheet .big{font-size:32px}
 .sheet .r{font-size:14px;padding:8px 0}
 .turn.on{gap:16px;padding-top:24px}
+/* consistency: the payouts insight card is a card, not an assistant sentence; its data is ink and its sentence is violet like the others */
+.insg .lead{color:var(--c-ink);font-size:15px;line-height:1.5;max-width:none}
+.insg .lead .say{color:#230762}
+.who3{font-size:14px;color:var(--c-ink)}
+.tfoot{font-size:14px}
 @container (max-width:600px){
   .bh{font-size:24px}
   .hero .hv{font-size:36px}.hero .vv{font-size:16px}.hero .hr > div{padding:10px 12px}
@@ -617,6 +622,7 @@ span.steps{cursor:default}
   .qtitle{font-size:22px}.figure .big{font-size:32px}
   .rparse,.sugg{padding-left:16px}
 }
+.stage[data-state="search"] .view{grid-row:2/4}.composer{grid-row:3}@container (max-width:600px){.composer .box.suggest .tabk{display:none}}
 @media (prefers-reduced-motion:reduce){.stage,.stage *,.stage *::before,.stage *::after{transition:none!important;animation:none!important}}
 </style>
 
@@ -722,8 +728,8 @@ payments     where status = declined and decline_code = authentication_required<
             </div>
             <div class="causes" id="causes" style="margin-top:8px">
               <div class="cause"><i style="background:var(--c-green)"></i><span class="t">Declined after Westmoor Bank's 3-D Secure change<em>19 payments since 17 Nov · <span class="g">recoverable</span></em></span><span class="v">$4,212.00</span></div>
-              <div class="cause"><i style="background:#BFC3C8"></i><span class="t">Disputes holding funds<em>3 disputes · decisions due by 2 Dec</em></span><span class="v">$2,640.00</span></div>
-              <div class="cause"><i style="background:#DFE1E4"></i><span class="t">Holiday payout moves to Mon 24 Nov<em>Timing only · nothing is lost</em></span><span class="v">$1,638.00</span></div>
+              <div class="cause"><i style="background:#CCCCD3"></i><span class="t">Disputes holding funds<em>3 disputes · decisions due by 2 Dec</em></span><span class="v">$2,640.00</span></div>
+              <div class="cause"><i style="background:#DDDDE3"></i><span class="t">Holiday payout moves to Mon 24 Nov<em>Timing only · nothing is lost</em></span><span class="v">$1,638.00</span></div>
             </div>
           </div>
 

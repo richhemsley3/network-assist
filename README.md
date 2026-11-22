@@ -2,13 +2,16 @@
 
 A creative-direction prototype for a language-first AI assistant inside a payments platform. The operator reads a weekly briefing, asks a question in plain language, and the assistant builds the answer from the payment records. Anything that moves money is prepared by the assistant and approved by a person on a fixed platform sheet.
 
-**Live prototype:** https://richhemsley3.github.io/network-assist/
+**Agent experience:** https://richhemsley3.github.io/network-assist/experience/ (full window, no preview controls; refresh to start over)
+
+**Prototype with notes:** https://richhemsley3.github.io/network-assist/
 
 ## What's here
 
 | Page | What it shows |
 |---|---|
-| [Prototype](https://richhemsley3.github.io/network-assist/) | The animated prototype. It waits for you at each step: click the ask field, press send, accept each suggested follow-up (click it or press Tab), then review and approve the retry. Chapters jump to any step; desktop and mobile. |
+| [Agent experience](https://richhemsley3.github.io/network-assist/experience/) | The assistant on its own, filling the browser window: no header, chapters, device switch or notes. Desktop or mobile layout follows the window width. Refresh to start the flow over. |
+| [Prototype](https://richhemsley3.github.io/network-assist/) | The same experience inside a preview frame, with chapters, a desktop/mobile switch and notes on motion. It waits for you at each step: click the ask field, press send, accept each suggested follow-up (click it or press Tab), then review and approve the retry. Chapters jump to any step; desktop and mobile. |
 | [AI element directions](https://richhemsley3.github.io/network-assist/directions/ai-elements.html) | Six treatments for the assistant's own elements: ring, edge light, spine, hard stops, wash and night. Ring was chosen. |
 | [Layout comparison](https://richhemsley3.github.io/network-assist/directions/layouts.html) | An early comparison of three layouts: centred column, canvas with thread, and document. |
 | [Polish directions](https://richhemsley3.github.io/network-assist/directions/polish.html) | Editorial, Instrument, and Material and light. Material was chosen, without the background light. |
