@@ -554,6 +554,69 @@ span.steps{cursor:default}
 .composer .tabk{display:none;font:inherit;font-size:12px;font-weight:600;color:var(--c-2);height:22px;padding:0 7px;border-radius:6px;box-shadow:inset 0 0 0 1px rgba(21,23,56,.14),0 1px 0 rgba(21,23,56,.08);place-items:center;flex:none}
 .composer .box.suggest .tabk{display:inline-grid}
 .composer .box > .aimark{margin-left:2px}
+/* ===================== Density pass =====================
+   Everything was a size too big. Top of the type scale comes down (64→48, 56→40, 40→32), padding tightens to 16–20, surface radius 20→16, gaps 22→16. */
+.home{gap:16px}
+.s-search{padding:20px 0 32px}
+.bh{font-size:32px;line-height:1.12;letter-spacing:-.025em;max-width:30ch;margin:-8px 0 0}
+.hero{border-radius:16px}
+.hero .hl{padding:18px 20px 0}
+.hero .hv{font-size:48px;letter-spacing:-.04em;margin:8px 0 6px}
+.hero .hd{font-size:14px}
+.hero .hspark{height:72px;width:calc(100% + 40px);margin:12px -20px 0}
+.hero .hr > div{padding:12px 20px}
+.hero .vv{font-size:20px;line-height:1.3}
+.reply{border-radius:14px;padding:12px 12px 12px 16px;font-size:15px}
+.reply .send,.composer .send{width:32px;height:32px;border-radius:10px}
+.rparse,.sugg{padding-left:40px}
+.asksec{padding-bottom:22px;margin:0}
+.insg{gap:12px}
+.insg .card{padding:18px 20px;border-radius:16px}
+.insg .lead{padding:20px 22px}
+.insg .num{font-size:28px;letter-spacing:-.025em;margin-top:6px}
+.insg .lead .num{font-size:40px;letter-spacing:-.035em}
+.insg .say{font-size:14px;line-height:1.45}
+.insg .lead .say{font-size:15px;margin-top:4px}
+.insg .card:not(.lead) .num{margin-top:auto;padding-top:18px}
+.who3{margin:14px 0 16px}
+.who3 div{padding:8px 0;font-size:14px}
+.insg .lead .btn,.btn{height:36px;padding:0 14px;font-size:14px}
+/* answer */
+.s-answer{padding:16px 0 32px}
+.s-answer .col{gap:16px 12px}
+.qtitle{font-size:28px;letter-spacing:-.022em;line-height:1.15}
+.qtitle.small{font-size:22px}
+.lead{font-size:16px;line-height:1.55}
+.figure{border-radius:16px;padding:18px 20px}
+.figure .big{font-size:40px;letter-spacing:-.035em}
+.figure .grid2{gap:12px}
+.cause{padding:9px 0}
+.cause .t,.cause .v{font-size:14px}
+#chartsec{border-radius:16px;padding:18px 20px}
+.prepared{border-radius:16px;padding:16px 18px;gap:10px}
+.prepared .w{font-size:17px}
+.prepared .m{font-size:14px}
+.paycard{border-radius:16px;padding:16px 18px 14px}
+.pays{font-size:14px}
+.pays td{height:40px}
+.receipt{border-radius:16px;padding:16px 18px;gap:10px}
+.receipt .w{font-size:17px}
+.receipt .row{font-size:14px}
+.tonal{height:32px;font-size:13px;padding:0 12px;border-radius:9px}
+.composer{padding:8px 24px 18px}
+.composer .box{border-radius:14px;padding:10px 10px 10px 16px;font-size:14px}
+.sheet{padding:22px 24px 24px;gap:12px}
+.sheet h5{font-size:19px}
+.sheet .big{font-size:32px}
+.sheet .r{font-size:14px;padding:8px 0}
+.turn.on{gap:16px;padding-top:24px}
+@container (max-width:600px){
+  .bh{font-size:24px}
+  .hero .hv{font-size:36px}.hero .vv{font-size:16px}.hero .hr > div{padding:10px 12px}
+  .insg .lead .num{font-size:34px}.insg .num{font-size:24px}
+  .qtitle{font-size:22px}.figure .big{font-size:32px}
+  .rparse,.sugg{padding-left:16px}
+}
 @media (prefers-reduced-motion:reduce){.stage,.stage *,.stage *::before,.stage *::after{transition:none!important;animation:none!important}}
 </style>
 
