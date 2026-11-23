@@ -7,6 +7,8 @@ You are building the **Network Assist** agent experience in Figma: foundations, 
 
 **Version 2, November 23, 2026.** The visual language is now the one built for Brightline Onboarding: the Design System Labs palette applied by its semantic tokens, Proxima Nova, nothing under 14px, an 8px grid, and surfaces only for what waits on the person or floats. The flow, the copy and the data are unchanged from version 1. If you built version 1, rebuild the foundations and the components; the screens and the prototype keep their structure.
 
+**Version 2.1, the same day.** Cards come back where they belong: on home, the figures and each insight are cards; in a turn, the composed objects (breakdown, chart, payments table, receipt) are cards, while the words stay on the page. The page is warm grey 025 so cards read as objects. The AI's gradient border is drawn on top of its element's fill and must be visible all the way round, not just the glow.
+
 Scope is the agent experience only. Do not build the preview frame, chapter controls, device switch, notes or the direction boards that sit around the prototype.
 
 ---
@@ -45,7 +47,7 @@ Network Assist is a language-first AI assistant inside a payments platform, used
 These rules decide every judgement call:
 
 1. **The assistant speaks in the system's info colour** (`text/voice` #0C4A69): the briefing headline, answer sentences, insight sentences, the label before its asks, its suggested next question in the bar. **Facts and figures inside its sentences are ink** (`text/primary` #1C1A17, 600).
-2. **Surfaces only for what waits on the person or floats.** The prepared action (with the AI edge), the ask field and the assist bar, and the confirm sheet are surfaces. Everything else sits on the white page: the briefing, the figures, the breakdown, the chart, the payments table, the receipt. Sections are separated by space and their own headings; turns are divided by one 1px rule. No card around every block.
+2. **Language on the page, objects in cards.** The assistant's words and the person's question sit directly on the page: question titles, the work trace and summary, answer sentences, the asks. Composed objects sit in cards: on home, the figures and each insight; in a turn, the breakdown, the chart, the payments table and the receipt. The assistant's own objects (the ask field, the assist bar, the prepared action) carry the AI edge instead of a card edge. The confirm sheet floats. Turns are divided by one 1px rule. Never put the assistant's sentences, the asks or the trace in a card.
 3. **The AI flourish is the multicolour flow and nothing else:** a gradient of blue, periwinkle and orange that drifts along the border with a soft glow behind it, on the ask field, the assist bar and a prepared action that waits for approval; the same colours in the assistant's ring mark and the trace spinner. It is the one exception to the system palette and appears only on what the assistant owns.
 4. **AI styling never touches money.** Figures, the payments table, the confirm sheet and the commit button stay plain. Once the person approves, the prepared action loses its edge and glow and turns to the subtle tone.
 5. **Asks to the assistant are chips; acts on the platform are buttons.** A chip is white with a 1px blue-200 edge and navy text. The one commit in view is a navy button (48 high). Secondary acts are white buttons with a 1px dark edge. No text links, no arrows.
@@ -67,6 +69,7 @@ Create a collection **`Primitives`** (one mode) holding the Design System Labs c
 | Variable | Value | | Variable | Value |
 |---|---|---|---|---|
 | `white` | #FFFFFF | | `blue/050` | #EBF4F5 |
+| `warm-gray/025` | #FAF8F5 | | | |
 | `warm-gray/050` | #F4F1EB | | `blue/100` | #D9EBED |
 | `warm-gray/100` | #EBE6DD | | `blue/200` | #A6CBD6 |
 | `warm-gray/150` | #E0DCD3 | | `blue/300` | #77B2C7 |
@@ -95,7 +98,8 @@ Create a collection **`Primitives`** (one mode) holding the Design System Labs c
 | `text/success` | green/500 | gains, "recoverable", the receipt label, "Approved by you" |
 | `text/error` | red/500 | drops |
 | `text/warning` | yellow/600 | the soonest deadline (reserved) |
-| `bg/page` | white | the page, the ask field, the bar, the prepared action, the sheet |
+| `bg/canvas` | warm-gray/025 | the page behind everything, and the assist bar's band |
+| `bg/page` | white | cards, the app bar, the ask field, the bar, the prepared action, the sheet |
 | `bg/subtle` | warm-gray/050 | the query block, the key cap, an approved action, hover on insights |
 | `border/subtle` | warm-gray/100 | every rule: table rows, cause rows, the turn divider, the hero divider |
 | `border/default` | warm-gray/150 | the app bar's bottom edge, the chart baseline, the sheet's edge |
@@ -136,7 +140,7 @@ Collection **`Layout`**:
 
 | Variable | Value | | Variable | Value |
 |---|---|---|---|---|
-| `space/4` | 4 | | `radius/surface` | 12 (prepared action, ask field, assist bar, insight hover, close button) |
+| `space/4` | 4 | | `radius/surface` | 12 (cards, prepared action, ask field, assist bar) |
 | `space/8` | 8 | | `radius/control` | 10 (buttons, chips, send) |
 | `space/12` | 12 | | `radius/item` | 8 (nav items, filters, query block, tooltip, key cap) |
 | `space/16` | 16 | | `radius/brand` | 6 |
@@ -174,13 +178,15 @@ Captions, labels, table headers and axis labels are `Body/Default` in text/terti
 
 | Style | Layers |
 |---|---|
+| `Surface/Card` | Drop shadow 0, 0, blur 0, spread 1, border/default (the 1px edge) · Drop shadow 0, 1, blur 2, #1C1A17 4%. Every card. |
+| `Surface/Card hover` | Drop shadow 0, 0, blur 0, spread 1, border/strong · Drop shadow 0, 8, blur 24, spread −12, #1C1A17 18%. Insights on hover. |
 | `Surface/Float` | Drop shadow 0, 0, blur 0, spread 1, border/default · Drop shadow 0, 16, blur 40, spread −16, #1C1A17 28%. Only on the confirm sheet. |
 | `AI/Glow · rest` | Layer blur 12 on the glow layer, opacity 32% |
 | `AI/Glow · working` | Layer blur 13, opacity 42% |
 | `AI/Glow · landed` | Layer blur 15, opacity 55% |
 | `AI/Glow · prepared` | Layer blur 16, opacity 24% |
 
-Nothing else has a shadow. Surfaces that do not float are separated by the AI edge (the field, the bar, the prepared action) or by tone (an approved action on bg/subtle).
+Cards use `Surface/Card`; the AI's objects use the AI edge and no card shadow; an approved action sits on bg/subtle with no edge.
 
 ### 2.6 Motion tokens
 
@@ -280,6 +286,8 @@ Structure, inside a frame the same size and radius as its host (`Clip content` o
    - Under the mask, add the host's fill (bg/page) as a separate inner rectangle so the host stays white.
 3. The host's own content sits above both.
 
+**The edge is always visible.** The 1.5px gradient ring sits on top of the host's white fill, all the way round, at full strength; the glow only spills outside it. If the host's fill ends up above the edge (in Figma, a fill on the host frame itself; in code, a background without `isolation: isolate` on the host), the ring disappears and only the glow shows. That is a defect.
+
 States (variant property `State` on `AI/Edge`):
 
 | State | Glow inset (top/bottom, left/right) | Glow blur | Glow opacity | When |
@@ -302,7 +310,7 @@ Wherever the assistant is the author, put `Mark/Assistant` (12 × 12) before the
 
 ## 5. Components
 
-Each entry: anatomy (outer to inner), layout, tokens, variants and properties, interactions, motion, mobile. "On the page" means no fill, no stroke, no shadow, no radius: the content sits directly on bg/page.
+Each entry: anatomy (outer to inner), layout, tokens, variants and properties, interactions, motion, mobile. "On the page" means no fill, no stroke, no shadow, no radius: the content sits directly on bg/canvas. **"Card" means fill bg/page, radius 12, padding 24 (16 on mobile), effect `Surface/Card`.**
 
 ### 5.1 `App bar`
 - Frame fill width, height 56, auto layout horizontal, padding 0 / 24, gap 24, align centre. Fill bg/page, bottom stroke 1px border/default.
@@ -316,11 +324,11 @@ Each entry: anatomy (outer to inner), layout, tokens, variants and properties, i
 - Mobile: headline `Mobile/Heading/Briefing` (24 / 32), fill width.
 
 ### 5.3 `Hero figures`
-- On the page. Auto layout horizontal, gap 32, fill width (896), two columns at 1.3 : 1.
-- Left column, vertical: "Paid out this week" `Body/Default` text/secondary · "$38,420.00" `Figure/Large`, 8 above and below · delta line `Body/Default` text/secondary: "−$8,490.00" in text/error, then " · 18.1% below last week" · bar strip, 16 above: eight bars from zero, height 72, gap 10, radius 3 at the top, chart/3, this week chart/1 (values in §11). No axes, no labels.
+- A card. Auto layout horizontal, gap 32, fill width (896), two columns at 1.3 : 1.
+- Left column, vertical: "Paid out this week" `Body/Default` text/secondary · "$38,420.00" `Figure/Large`, 8 above and below · delta line `Body/Default` text/secondary: "−$8,490.00" in text/error, then " · 18.1% below last week" · bar strip, pinned to the bottom of the column (at least 16 above): eight bars from zero, height 96, gap 10, radius 3 at the top, chart/3, this week chart/1 (values in §11). No axes, no labels.
 - Right column: a 1px border/subtle on its left edge and 32 padding left; three rows divided by 1px border/subtle, each padding 16 / 0 (the first has no top padding or rule): label `Body/Default` text/secondary · value `Figure/Medium` · note `Body/Default` text/tertiary with a coloured delta.
   - Gross volume / $214,860.40 / "+3.2%" (text/success) " on last week" · Payment success / 94.1% / "−2.3 pts" (text/error) " on last week" · Open disputes / 3 / "$2,640.00 held".
-- Mobile: one column. The large figure is 40. The right column becomes one row of three equal cells under a 1px border/subtle top rule, 16 above, gap 12, no left rule; side figures 20 / 28.
+- Mobile: one column. The large figure is 40 and the bar strip 72 high. The right column becomes three stacked rows, each with a 1px border/subtle top rule and padding 12 / 0: label and note on the left, the figure (20 / 28) right aligned.
 
 ### 5.4 `Ask field` (home)
 - Frame fill width, min height 56, radius 12, auto layout horizontal, padding 8 / 8 / 8 / 20, gap 16, align centre. Fill bg/page with `AI/Edge` behind. No shadow.
@@ -336,8 +344,8 @@ Each entry: anatomy (outer to inner), layout, tokens, variants and properties, i
 - Interaction: click Rest → Typing (the rest of the briefing dims to 30%). Send is the only way on.
 - Mobile: scope line inset 16.
 
-### 5.5 `Insight`
-- On the page: no fill at rest, radius 12, padding 16, auto layout vertical, gap 4. The insight group sits 16 wider on each side than the content column so the text aligns with the column.
+### 5.5 `Insight card`
+- A card, auto layout vertical, gap 4. The insight group aligns with the content column.
 - Variants `Type`:
   - **Lead** (Payouts). Children in order:
     1. "Payouts" `Body/Default` text/secondary.
@@ -348,9 +356,9 @@ Each entry: anatomy (outer to inner), layout, tokens, variants and properties, i
   - **Standard** (Disputes, Next payout). Children: label · flexible spacer (min 16) · figure `Figure/Medium` · sentence `Body/Default` text/voice, max width 44ch.
     - Disputes: "Disputes" · "4 days" · "until evidence is due on the first of 3 disputes. $2,640.00 is held until they're decided."
     - Next payout: "Next payout" · "$41,276.40" · "arrives Monday 24 Nov, including $1,638.00 held over from the holiday."
-- `State`: Default (no fill) · Hover (fill bg/subtle). No lift, no shadow. The whole insight is the target; there are no links inside it. Clicking the Lead asks "Why were payouts lower this week?"; its button goes straight to the prepared retry.
-- Layout on home: a two-column grid at 1.35 : 1, gap 8 / 16. Lead spans both rows on the left; Disputes top right, Next payout bottom right.
-- Mobile: one column; the group is 8 wider each side and each insight pads 8.
+- `State`: Default (`Surface/Card`) · Hover (`Surface/Card hover`: the edge darkens to border/strong and a soft shadow appears; nothing moves). The whole card is the target; there are no links inside it. Clicking the Lead asks "Why were payouts lower this week?"; its button goes straight to the prepared retry.
+- Layout on home: a two-column grid at 1.35 : 1, gap 16. Lead spans both rows on the left; Disputes top right, Next payout bottom right.
+- Mobile: one column, gap 12, cards pad 16.
 
 ### 5.6 `Question title`
 - `Heading/Question` in every turn, text/primary, fill width. It is the person's words, so ink, not the voice colour.
@@ -377,8 +385,8 @@ payments     where status = declined and decline_code = authentication_required
 ### 5.8 `Answer sentence`
 - `Body/Lead`, text/voice, max width 62ch. Figures inside are 600 text/primary. First turn: "Payouts were **$38,420.00** this week, $8,490.00 less than last week. Three things explain all of it, and about half can be recovered today." Second: "These are the 19 payments Westmoor Bank declined with “authentication required”. Every one can be retried, so I've selected them all." Third: "It's prepared. Nothing is sent until you confirm."
 
-### 5.9 `Breakdown` (Paid out)
-- On the page, full content width, auto layout vertical, gap 8.
+### 5.9 `Breakdown card` (Paid out)
+- A card, full content width, auto layout vertical, gap 8.
 - "Paid out · 16–22 Nov" `Body/Default` text/tertiary · "$38,420.00" `Figure/Large` · "**−$8,490.00** · 18.1% below 9–15 Nov" `Body/Default` text/secondary with the amount 600 text/primary.
 - Split bar, 8 above: height 16, auto layout horizontal gap 4, three segments radius 4: 49.6% chart/1 · 31.1% chart/2 · 19.3% chart/3.
 - Cause rows (`Cause row` component): grid 10 | fill | hug, gap 12, padding 12 / 0, top rule 1px border/subtle. Marker `Mark/Legend` · title `Body/Default` with a sub-line `Body/Default` text/tertiary · amount `Body/Strong`.
@@ -386,8 +394,8 @@ payments     where status = declined and decline_code = authentication_required
   - Disputes holding funds / "3 disputes · decisions due by 2 Dec" / $2,640.00 (chart/2)
   - Holiday payout moves to Mon 24 Nov / "Timing only · nothing is lost" / $1,638.00 (chart/3)
 
-### 5.10 `Payouts chart` (last 8 weeks)
-- On the page, full content width, auto layout vertical, gap 16, 8 above.
+### 5.10 `Chart card` (Payouts, last 8 weeks)
+- A card, full content width, auto layout vertical, gap 16.
 - Header: auto layout horizontal space-between, wrap: "Payouts, last 8 weeks" `Heading/Section` and "dashed line: the 7-week average, $44,096 · green: what retrying recovers" `Body/Default` text/tertiary.
 - Plot, 24 above: a y-axis column 48 wide and a plot 200 high.
   - Y axis $0, $30k, $60k: `Body/Default` chart/axis, right aligned, centred on their lines. Grid lines at $30k and $60k: 1px chart/grid, dotted. Baseline at $0: 1px border/default, solid.
@@ -411,8 +419,8 @@ payments     where status = declined and decline_code = authentication_required
 - A follow-up turn: auto layout vertical, gap 24, padding top 48, 24 above, top rule 1px border/subtle, fill width. Contains: Question title · trace or summary · answer sentence · the prepared action and the asks row · the evidence.
 - Mobile: padding top 32, 8 above, gap 16.
 
-### 5.13 `Payments table`
-- On the page, auto layout vertical, gap 16.
+### 5.13 `Payments card`
+- A card, auto layout vertical, gap 16.
 - Filters: `Nav item`s All 19 (selected) · Over $200 · Repeat customers, gap 4.
 - Table: header row `Body/Default` text/tertiary, padding bottom 8, bottom rule 1px border/subtle: (checkbox column 30) · Customer · Declined · Card · Amount (right aligned). Body rows height 48, bottom rule 1px border/subtle, `Body/Default`: checkbox · name text/primary · date text/secondary · "•••• 4471" text/secondary · amount text/primary right aligned. Cells have 16 right padding except the last.
 - Rows (component `Payment row`, variants `Selected` On/Off): Orchard Lane Café · 17 Nov · 4471 · $312.40 / Pell & Daughters · 17 Nov · 0932 · $189.00 / Norrow Bakehouse · 18 Nov · 7710 · $455.75 / Kite Street Deli · 18 Nov · 2286 · $98.20 / Ashby Market · 19 Nov · 5103 · $260.00 / Larch Hotel Group · 19 Nov · 6648 · $731.10 / Fenwick Florists · 20 Nov · 3390 · $144.85 / Marlow Provisions · 21 Nov · 8821 · $205.50.
@@ -425,13 +433,13 @@ payments     where status = declined and decline_code = authentication_required
 - Content: "Confirm · Halden Supply Co." `Body/Default` text/tertiary · "Retry 19 declined payments" `Heading/Action` · "$4,212.00" `Figure/Sheet` · three rows (grid fill | hug, gap 12, padding 12 / 0, top rule 1px border/subtle, `Body/Default`, left cell text/tertiary): Customers / 19 Westmoor Bank cardholders · What they see / A 3-D Secure prompt by email · Settles to / Payout on Mon 24 Nov · actions right aligned, gap 12: `Button/Secondary` "Not now", `Button/Commit` "Retry 19 payments" · note `Body/Default` text/tertiary: "This sheet is part of the platform, not generated. Nothing is sent until you press Retry."
 - Mobile: full width, anchored to the bottom, radius 16 / 16 / 0 / 0; the figure is 32.
 
-### 5.15 `Receipt`
-- On the page, auto layout vertical, gap 8.
+### 5.15 `Receipt card`
+- A card, auto layout vertical, gap 8.
 - "Retry started · today, 4:12 pm" `Body/Default` text/success · "19 customers have been sent a 3-D Secure prompt" `Heading/Section` · progress bar 8 above and below: height 8, radius 4, track chart/grid, fill status/success-strong · row space-between, wrap, gap 8 / 24, `Body/Default` text/secondary: "**4 of 19** authenticated · **$1,055.35** recovered so far" (bold parts 600 text/primary) and `Button/Secondary` with Countdown on: "Cancel the rest · 9:58".
 - Variants `State`: Running (progress 21% = 4 of 19) · Cancelled (secondary button Disabled, label "Stopped · $1,055.35 kept").
 
 ### 5.16 `Assist bar` (bottom)
-- Container: fill width, padding 16 / 24 / 24, centred content, a bg/page band at 94% behind it so the conversation passes under cleanly. Hidden on home until the person sends a question from the ask field.
+- Container: fill width, padding 16 / 24 / 24, centred content, fill bg/canvas (its own row under the conversation). Hidden on home until the person sends a question from the ask field.
 - Bar: width 896 (fill on mobile), min height 56, radius 12, auto layout horizontal, padding 8 / 8 / 8 / 20, gap 16, align centre, fill bg/page, `AI/Edge` behind, `Body/Default`.
 - Children: `Mark/Assistant` · text (fill) · `Key cap` (only when suggesting) · `Button/Send`.
 - Variants `State`:
@@ -450,13 +458,13 @@ payments     where status = declined and decline_code = authentication_required
 ## 6. Layout of the two screens
 
 ### Home (briefing)
-- App bar, then a scrolling view on bg/page. Content column 960 wide centred (896 inside 32 padding), top padding 32, bottom 40, vertical gap 24 between: Briefing header · Hero figures · Ask section (Ask field + 24 reserved below for the scope line) · Insights.
+- App bar (bg/page), then a scrolling view on bg/canvas. Content column 960 wide centred (896 inside 32 padding), top padding 32, bottom 40, vertical gap 24 between: Briefing header · Hero figures · Ask section (Ask field + 24 reserved below for the scope line) · Insights.
 - No assist bar on home.
 
 ### Answer (conversation)
 - App bar, a scrolling view, and the Assist bar pinned to the bottom.
 - Content column 960 wide centred (896 inside 32), top padding 32, bottom 40, **one column**, vertical gap 24.
-- Order in the first turn: Question title · Work summary (after the trace folds) · Query block (only when open) · Answer sentence · **Prepared action · Asks row** · Breakdown · Payouts chart. Then Turn 2 (title · summary · sentence · Asks row · Payments table) and Turn 3 (title · trace · sentence · Prepared action · Receipt).
+- Order in the first turn: Question title · Work summary (after the trace folds) · Query block (only when open) · Answer sentence · **Prepared action · Asks row** · Breakdown card · Chart card. Then Turn 2 (title · summary · sentence · Asks row · Payments card) and Turn 3 (title · trace · sentence · Prepared action · Receipt card). Everything sits on bg/canvas; the cards and the AI objects are white.
 
 ### Mobile
 - Content padding 16, one column throughout, the same order, gap 16.
@@ -479,7 +487,7 @@ Every motion below is part of the design. Build what Figma can, and put the exac
 | Step | Spec |
 |---|---|
 | Briefing loads | Insights rise: opacity 0 → 1 and y +10 → 0, 500 ms ease/standard, staggered 0 / 80 / 160 ms |
-| Insight hover | Fill to bg/subtle, 250 ms ease/standard. Nothing moves |
+| Insight hover | Effect to `Surface/Card hover`, 250 ms ease/standard. Nothing moves |
 | Click the ask field | Everything on home except the ask section fades to 30% (500 ms ease/standard); the field's edge goes to Typing (900 ms); a caret appears |
 | Typing | One character every 45–85 ms (spaces 90 ms). After the last character: "payouts" underline grows left to right 0 → 100% over 500 ms, then "this week" 220 ms later; the scope line fades up (opacity 0 → 1, y +4 → 0, 450 ms) 180 ms after that; Send becomes Waiting for you |
 | Press send | The scope line fades out. At the same moment: the ask field travels to the assist bar's position at the bottom (FLIP, 700 ms ease/out, translating and scaling from its old box); the typed question travels into the Question title (FLIP, 650 ms ease/out, opacity 60% → 100%, scaling from the field's text size). The briefing is removed. 650 ms later the assist bar goes to Working |
@@ -530,14 +538,14 @@ Build each as a full frame using only components. Desktop frames 1440 × 900 on 
 | # | Frame name | What it shows |
 |---|---|---|
 | 01 | `Home / Rest` | Briefing, Hero figures, Ask field Rest, Insights; no assist bar |
-| 02 | `Home / Insight hover` | 01 with the Lead insight in Hover |
+| 02 | `Home / Insight hover` | 01 with the Lead insight card in Hover |
 | 03 | `Home / Typing` | Briefing dimmed to 30% except the ask section; Ask field Typing ("Why were payo") |
 | 04 | `Home / Understood` | Ask field Understood with the scope line; Send Waiting for you |
 | 05 | `Answer / Working` | Question title; trace with steps 1–2 Done and step 3 Running; assist bar Working |
-| 06 | `Answer / Built` | Work summary (Steps Closed), answer sentence, Prepared action Waiting, Asks row, Breakdown, Payouts chart; assist bar Suggesting "Show me the declined ones" |
+| 06 | `Answer / Built` | Work summary (Steps Closed), answer sentence, Prepared action Waiting, Asks row, Breakdown card, Chart card; assist bar Suggesting "Show me the declined ones" |
 | 07 | `Answer / Steps open` | 06 with Steps Open and the Query block |
 | 08 | `Answer / Chart hover` | 06 scrolled to the chart with the tooltip on 9 Nov |
-| 09 | `Drill / Built` | Turn 1's chips Answered; Turn 2: title, summary, sentence, Asks row, Payments table with all rows selected; assist bar Suggesting "Retry them" |
+| 09 | `Drill / Built` | Turn 1's chips Answered; Turn 2: title, summary, sentence, Asks row, Payments card with all rows selected; assist bar Suggesting "Retry them" |
 | 10 | `Retry / Prepared` | Turn 3: title, trace (both Done), sentence, Prepared action Waiting; assist bar Idle |
 | 11 | `Retry / Confirm` | 10 with the scrim and the Confirm sheet |
 | 12 | `Retry / Receipt` | Prepared action Approved; Receipt Running (4 of 19, $1,055.35, 9:58) |
@@ -616,7 +624,8 @@ Use these strings exactly, including typographic characters (− minus, · middl
 
 These are the defaults that make it look generic. If you catch yourself reaching for one, stop.
 
-- A card (fill, border or shadow) around a block that does not wait on the person or float: the briefing, figures, the breakdown, charts, tables, receipts.
+- A card around the assistant's words, the question title, the trace or the asks; or a composed object (figures, insight, breakdown, chart, table, receipt) left loose on the page without its card.
+- The AI edge reduced to a glow: the 1.5px gradient border must show all the way round.
 - Text smaller than 14px, anywhere, including axis labels, captions and table headers.
 - A colour that is not a Design System Labs token, except the three flow colours on the AI flourish.
 - A gradient anywhere but the AI edge, the mark and the spinner: no gradient backgrounds, washes, chart fills or brand tiles.
@@ -627,7 +636,7 @@ These are the defaults that make it look generic. If you catch yourself reaching
 - The AI edge or a glow on anything that moves money: figures, the table, the sheet, the commit button.
 - Pills or badges for status, coloured alert boxes, icons in rounded squares, avatars.
 - All-caps labels, numbered eyebrows (01, 02), more than one label style per screen.
-- Animated attention-seekers: pulsing buttons, bouncing hints, lifting cards on hover, anything that moves without a reason.
+- Animated attention-seekers: pulsing buttons, bouncing hints, cards that lift or move on hover, anything that moves without a reason.
 - A second commit button in view.
 - Changing the copy, the numbers or the order of the flow.
 
@@ -637,9 +646,9 @@ These are the defaults that make it look generic. If you catch yourself reaching
 
 - [ ] Collections `Primitives`, `Semantic`, `Layout`, `Motion` exist; no component uses a raw colour, size, radius or duration.
 - [ ] All text uses the styles in §2.4; Proxima Nova 300/400/600 only; tabular figures on; nothing under 14.
-- [ ] The only effect styles are `Surface/Float` and the four AI glows; only the sheet has a shadow.
-- [ ] `AI/Edge` is one component with seven states and drifts in the prototype; it appears only on the ask field, the assist bar and the prepared action.
-- [ ] Every component in §5 exists with every variant listed, built with auto layout; everything marked "on the page" has no fill, stroke, shadow or radius.
+- [ ] The effect styles are `Surface/Card`, `Surface/Card hover`, `Surface/Float` and the four AI glows; nothing has a one-off shadow.
+- [ ] `AI/Edge` is one component with seven states and drifts in the prototype; it appears only on the ask field, the assist bar and the prepared action, and its gradient border is visible all the way round in every state but Off.
+- [ ] Every component in §5 exists with every variant listed, built with auto layout; every "card" uses `Surface/Card`, and words never sit in a card.
 - [ ] In every turn the prepared action and the asks row come before the evidence.
 - [ ] All 13 desktop and 7 mobile frames exist with the exact names in §8.
 - [ ] The prototype in §9 runs from 01 to 13 using only the person's clicks (except 03 → 04 and 05 → 06, which stand in for typing and the assistant working), and the chips advance it as well as the bar.

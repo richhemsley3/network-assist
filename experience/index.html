@@ -1056,6 +1056,38 @@ tr.sel .cb{background:var(--navy)}
   .composer{padding:12px 16px 16px}
   .sheet .big{font-size:32px}
 }
+
+/* ===================== Cards where they belong (Nov 23, 2026, second pass) =====================
+   Language sits on the page: question titles, the work trace and summary, the assistant's sentences, the asks.
+   Composed objects sit in cards: on home, the figures and each insight; in a turn, the breakdown, the chart,
+   the payments table and the receipt. A card is white, a 1px border-default edge, radius 12, padding 24, on a
+   warm-grey-025 page so the cards read as objects. The AI's own objects (the ask field, the bar, the prepared
+   action) carry the multicolour gradient border, 1.5px, drawn on top of their own fill, with the glow behind. */
+.ring{isolation:isolate}
+.ring::after{border-width:1.5px!important}
+.stage{--card-edge:0 0 0 1px var(--sds-border-default),0 1px 2px rgba(28,26,23,.04)}
+.stage,html,body{background:var(--sds-color-warm-gray-025)}
+.appbar{background:var(--sds-bg-page)}
+.composer{background:var(--sds-color-warm-gray-025)}
+/* home: the figures and each insight are cards */
+.hero{background:var(--sds-bg-page);border-radius:12px;box-shadow:var(--card-edge);padding:24px;gap:0 32px}
+.hero .hl{display:flex;flex-direction:column}
+.hero .hspark{margin-top:auto;padding-top:16px;height:112px}
+@container (max-width:600px){.hero .hspark{height:72px} .hero .hr{grid-template-columns:minmax(0,1fr);gap:0;border-top:0;margin-top:8px} .hero .hr > div,.hero .hr > div:first-child{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;column-gap:16px;padding:12px 0;border-top:1px solid var(--c-rule)} .hero .hr > div .k{grid-column:1} .hero .hr > div .vv{grid-column:2;grid-row:1/3;text-align:right} .hero .hr > div .n{grid-column:1}}
+.insg{margin:0;gap:16px}
+.insg .card,.insg .lead{padding:24px;border-radius:12px;background:var(--sds-bg-page);box-shadow:var(--card-edge);transition:box-shadow .25s var(--ease),opacity .5s var(--ease),transform .5s var(--ease)}
+.insg .card:hover,.insg .card:focus-visible{background:var(--sds-bg-page);box-shadow:0 0 0 1px var(--sds-border-strong),0 8px 24px -12px rgba(28,26,23,.18)}
+/* a turn: composed objects are cards; the words stay on the page */
+.figure,#chartsec,.paycard{padding:24px;border-radius:12px;background:var(--sds-bg-page);box-shadow:var(--card-edge)}
+.receipt{padding:24px;border-radius:12px;background:var(--sds-bg-page);box-shadow:var(--card-edge)}
+#chartsec{padding-top:24px}
+.wplot .avg span{background:var(--sds-bg-page)}
+.prepared.sent{background:var(--sds-bg-subtle);box-shadow:none}
+@container (max-width:600px){
+  .hero{padding:16px}
+  .insg{margin:0;gap:12px} .insg .card,.insg .lead{padding:16px}
+  .figure,#chartsec,.paycard,.receipt{padding:16px}
+}
 </style>
 
 </head>

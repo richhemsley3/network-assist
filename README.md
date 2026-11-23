@@ -29,8 +29,8 @@ A creative-direction prototype for a language-first AI assistant inside a paymen
 
 - Colour is the Design System Labs palette, applied by its semantic tokens, on a white page. The assistant speaks in the system's info blue; facts and figures stay in ink.
 - Type is Proxima Nova, light for large figures. Nothing is smaller than 14px, and spacing sits on an 8px grid.
-- Only what waits on the person or floats is a surface: the prepared action, the ask field and bar, the confirm sheet. The briefing, figures, charts, tables and receipts sit on the page; turns are divided by one rule.
-- The AI flourish is the multicolour flow: a gradient of blue, periwinkle and orange drifting along the edge of the ask field, the bar and the prepared action, with a soft glow, plus the ring mark and the spinner. It never touches money.
+- Language on the page, objects in cards. The assistant's sentences, the question, the trace and the asks sit on a warm grey page; the home figures and insights, and in each answer the breakdown, chart, table and receipt, are white cards. Turns are divided by one rule.
+- The AI flourish is the multicolour flow: a gradient of blue, periwinkle and orange drifting along a 1.5px border on the ask field, the bar and the prepared action, with a soft glow behind it, plus the ring mark and the spinner. It never touches money.
 - Asks to the assistant are chips; acts are buttons, with one navy commit in view. No text links and no arrows.
 - In each answer the action comes before the evidence. Charts are bars from zero in the system's chart series, with labels at true size.
 
