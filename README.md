@@ -19,7 +19,7 @@ A creative-direction prototype for a language-first AI assistant inside a paymen
 
 ## The story
 
-1. **Home.** A full-width page: the title and the assistant's weekly briefing, the week's payout figures, three insights, then the ask field, which stays at the bottom of the window while you read.
+1. **Home.** A full-width page: the title and the assistant's weekly briefing, the week's payout figures, three insights, then the ask field, at the end of the page; the bar is pinned only once you are talking to the assistant.
 2. **Query.** The question rises into the title and the assistant's work runs in the open, one line per step.
 3. **Build.** The answer composes in reading order: the sentence, then the figure, the gap split into its three causes and eight weeks of payouts as bars from zero, then the prepared retry waiting for approval and the next question, just above the bar.
 4. **Drill down.** The assistant proposes the next question as a chip and in the bar; the 19 declined payments slide in and select themselves.
@@ -32,7 +32,7 @@ A creative-direction prototype for a language-first AI assistant inside a paymen
 - Language on the page, objects in cards. The assistant's sentences, the question, the trace and the asks sit on a warm grey page; the home figures and insights, and in each answer the breakdown, chart, table and receipt, are white cards. Turns are divided by one rule.
 - The AI flourish is the multicolour flow: a gradient of blue, periwinkle and orange drifting along a 1.5px border on the ask field, the bar and the prepared action, with a soft glow behind it, plus the ring mark and the spinner. It never touches money.
 - Asks to the assistant are chips; acts are buttons, with one navy commit in view. No text links and no arrows.
-- Read, then comprehend, then act: on home the ask field follows the data and stays in view; in each answer the evidence comes before the prepared action and the asks. Home is a full-width page; only the conversation uses a centred column. Charts are bars from zero in the system's chart series, with labels at true size.
+- Read, then comprehend, then act: on home the ask field follows the data, in the page flow; in each answer the evidence comes before the prepared action and the asks. Home is a full-width page; only the conversation uses a centred column. Charts are bars from zero in the system's chart series, with labels at true size.
 
 ## Notes
 

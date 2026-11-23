@@ -9,7 +9,7 @@ You are building the **Network Assist** agent experience in Figma: foundations, 
 
 **Version 2.1, the same day.** Cards come back where they belong: on home, the figures and each insight are cards; in a turn, the composed objects (breakdown, chart, payments table, receipt) are cards, while the words stay on the page. The page is warm grey 025 so cards read as objects. The AI's gradient border is drawn on top of its element's fill and must be visible all the way round, not just the glow.
 
-**Version 2.2, the same day.** Home is a normal page, not the assistant's centred column: a page title, the briefing as a lead, and a full-width card grid. Every screen now follows reading order, **read, then comprehend, then act**: on home the ask field comes after the figures and insights and sticks to the bottom of the window; in a turn the evidence comes before the prepared action and the asks, which sit just above the pinned bar. This reverses version 2's "action before evidence".
+**Version 2.2, the same day.** Home is a normal page, not the assistant's centred column: a page title, the briefing as a lead, and a full-width card grid. Every screen now follows reading order, **read, then comprehend, then act**: on home the ask field comes after the figures and insights, in the page flow (nothing on home is pinned; the bar pins only in assist mode); in a turn the evidence comes before the prepared action and the asks, which sit just above the pinned bar. This reverses version 2's "action before evidence".
 
 Scope is the agent experience only. Do not build the preview frame, chapter controls, device switch, notes or the direction boards that sit around the prototype.
 
@@ -53,7 +53,7 @@ These rules decide every judgement call:
 3. **The AI flourish is the multicolour flow and nothing else:** a gradient of blue, periwinkle and orange that drifts along the border with a soft glow behind it, on the ask field, the assist bar and a prepared action that waits for approval; the same colours in the assistant's ring mark and the trace spinner. It is the one exception to the system palette and appears only on what the assistant owns.
 4. **AI styling never touches money.** Figures, the payments table, the confirm sheet and the commit button stay plain. Once the person approves, the prepared action loses its edge and glow and turns to the subtle tone.
 5. **Asks to the assistant are chips; acts on the platform are buttons.** A chip is white with a 1px blue-200 edge and navy text. The one commit in view is a navy button (48 high). Secondary acts are white buttons with a 1px dark edge. No text links, no arrows.
-6. **Read, then comprehend, then act.** In a turn: the question, the work summary, the answer sentence (read); the breakdown, the chart, the table (comprehend); then the prepared action and the asks (act), which end the turn just above the pinned assist bar. On home: the page title and briefing, the figures and insights, then the ask field, which sticks to the bottom of the window so it never scrolls out of reach. Actions that belong to one insight stay inside that insight's card.
+6. **Read, then comprehend, then act.** In a turn: the question, the work summary, the answer sentence (read); the breakdown, the chart, the table (comprehend); then the prepared action and the asks (act), which end the turn just above the pinned assist bar. On home: the page title and briefing, the figures and insights, then the ask field as the last row of the page. It scrolls with the page; nothing on home is pinned. The assist bar is pinned to the bottom only once the assist is active. Actions that belong to one insight stay inside that insight's card.
 7. **Charts are instruments, in the system's series:** navy (chart-1) for the thing that matters, teal (chart-2) and light blue (chart-3) for the rest. Bars start from zero. Never a line through weekly or daily totals. Labels are real 14px text, never scaled.
 8. **Status is a coloured word, never a pill:** success green, error red, warning amber.
 9. **Nothing moves the flow on except the person.** The experience waits at the ask field, at send, at each ask (the chip or the bar) and at the approval.
@@ -333,7 +333,7 @@ Each entry: anatomy (outer to inner), layout, tokens, variants and properties, i
 
 ### 5.4 `Ask field` (home)
 - Frame fill width, min height 56, radius 12, auto layout horizontal, padding 8 / 8 / 8 / 20, gap 16, align centre. Fill bg/page with `AI/Edge` behind. No shadow.
-- **Placement:** the last row of the home grid, after the insights. It is sticky: while the data scrolls, the ask section (field, scope line, and a bg/canvas band 16 above and 40 below it, full bleed to the page edges) stays at the bottom of the window; it settles in place when the page ends. In the prototype, set the ask section to *Fix position when scrolling* on the home frames.
+- **Placement:** the last row of the home grid, after the insights, full width, 8 above it and 32 reserved below it for the scope line. It is part of the page and scrolls with it. Do not fix or stick it to the window: only the assist bar is pinned, and only once the assist is active.
 - Children: `Mark/Assistant` · text (fill, single line, truncate with ellipsis) `Body/Default` · `Button/Send`.
 - Under it, a **scope line** (24 below; reserve 24 of bottom padding in the section): `Body/Default` text/tertiary with the understood terms in 600 text/primary: "Looking at **payouts** for **16–22 Nov**, compared with **9–15 Nov**". Left inset 40 (aligns under the text).
 - Variants `State`:
@@ -465,7 +465,7 @@ payments     where status = declined and decline_code = authentication_required
   1. Page header across all three columns.
   2. Hero figures card across columns 1–2 · Lead insight card in column 3, spanning rows 2 and 3.
   3. Disputes card in column 1 · Next payout card in column 2.
-  4. Ask section across all three columns, sticky to the bottom of the window (§5.4).
+  4. Ask section across all three columns, in the page flow (§5.4).
 - Container below 1100: two columns (header; hero across both; Lead on the left spanning two rows beside Disputes and Next payout; ask section across both).
 - No assist bar on home.
 
@@ -475,7 +475,7 @@ payments     where status = declined and decline_code = authentication_required
 - Order in the first turn, read → comprehend → act: Question title · Work summary (after the trace folds) · Query block (only when open) · Answer sentence · Breakdown card · Chart card · **Prepared action · Asks row**. Then Turn 2 (title · summary · sentence · Payments card · Asks row) and Turn 3 (title · trace · sentence · Prepared action · Receipt card). The turn ends with its action just above the pinned bar. Everything sits on bg/canvas; the cards and the AI objects are white.
 
 ### Mobile
-- Content padding 16, one column throughout, the same order, gap 16. Home stacks: header, hero, Lead, Disputes, Next payout, then the sticky ask section.
+- Content padding 16, one column throughout, the same order, gap 16. Home stacks: header, hero, Lead, Disputes, Next payout, then the ask section.
 
 ---
 
@@ -545,7 +545,7 @@ Build each as a full frame using only components. Desktop frames 1440 × 900 on 
 
 | # | Frame name | What it shows |
 |---|---|---|
-| 01 | `Home / Rest` | Page header, Hero figures card, the three insight cards, Ask section (sticky, at the bottom of the frame); no assist bar |
+| 01 | `Home / Rest` | Page header, Hero figures card, the three insight cards, then the Ask section as the last row (make the frame tall enough to show it, or scroll); no assist bar |
 | 02 | `Home / Insight hover` | 01 with the Lead insight card in Hover |
 | 03 | `Home / Typing` | Briefing dimmed to 30% except the ask section; Ask field Typing ("Why were payo") |
 | 04 | `Home / Understood` | Ask field Understood with the scope line; Send Waiting for you |
@@ -639,7 +639,8 @@ These are the defaults that make it look generic. If you catch yourself reaching
 - A gradient anywhere but the AI edge, the mark and the spinner: no gradient backgrounds, washes, chart fills or brand tiles.
 - Blue text links, underlined words as actions, "→" or "↗" arrows, "See more", "Learn more". Asks are chips; acts are buttons.
 - A line or area chart through weekly or daily totals; bars that do not start at zero; labels drawn inside a scaled SVG.
-- An action or an ask placed above the evidence it depends on, or an ask field that scrolls out of view while the data is still being read.
+- An action or an ask placed above the evidence it depends on.
+- A pinned or sticky ask field on home: the bar is pinned only in assist mode.
 - The assistant's centred reading column on home.
 - A sparkle or star icon for AI; a filled gradient dot; the word "Assistant" repeated beside every mark.
 - The AI edge or a glow on anything that moves money: figures, the table, the sheet, the commit button.
@@ -658,7 +659,7 @@ These are the defaults that make it look generic. If you catch yourself reaching
 - [ ] The effect styles are `Surface/Card`, `Surface/Card hover`, `Surface/Float` and the four AI glows; nothing has a one-off shadow.
 - [ ] `AI/Edge` is one component with seven states and drifts in the prototype; it appears only on the ask field, the assist bar and the prepared action, and its gradient border is visible all the way round in every state but Off.
 - [ ] Every component in §5 exists with every variant listed, built with auto layout; every "card" uses `Surface/Card`, and words never sit in a card.
-- [ ] Every screen reads, then explains, then acts: on home the ask section is last and sticky; in every turn the prepared action and the asks row come after the evidence, just above the bar.
+- [ ] Every screen reads, then explains, then acts: on home the ask section is last and scrolls with the page; in every turn the prepared action and the asks row come after the evidence, just above the bar.
 - [ ] Home is full width and left aligned on the three-column grid; only the conversation is centred.
 - [ ] All 13 desktop and 7 mobile frames exist with the exact names in §8.
 - [ ] The prototype in §9 runs from 01 to 13 using only the person's clicks (except 03 → 04 and 05 → 06, which stand in for typing and the assistant working), and the chips advance it as well as the bar.

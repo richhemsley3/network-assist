@@ -1119,18 +1119,18 @@ tr.sel .cb{background:var(--navy)}
 }
 
 /* ===================== Reading order (Nov 23, 2026) =====================
-   Read, comprehend, then act. Home: the briefing, the figures and insights, then the ask field, which sticks to the
-   bottom of the window while the data scrolls under it and settles at the end. A turn: the question, the sentence, the
+   Read, comprehend, then act. Home: the briefing, the figures and insights, then the ask field, in the page flow.
+   Nothing on home is pinned; the bar pins only once the assist is active. A turn: the question, the sentence, the
    evidence, then the prepared action and the asks, just above the pinned bar. */
 .home{grid-template-areas:"ph ph ph" "bh bh bh" "hero hero lead" "i2 i3 lead" "ask ask ask"}
-.home .asksec{position:sticky;bottom:0;z-index:4;margin:0 -40px;padding:16px 40px 40px;background:var(--sds-color-warm-gray-025)}
+.home .asksec{position:relative;margin:8px 0 0;padding:0 0 32px;background:none}
 .home .rparse{bottom:12px}
 @container (max-width:1100px){
   .home{grid-template-areas:"ph ph" "bh bh" "hero hero" "lead i2" "lead i3" "ask ask"}
 }
 @container (max-width:600px){
   .home{grid-template-areas:"ph" "bh" "hero" "lead" "i2" "i3" "ask"}
-  .home .asksec{margin:0 -16px;padding:12px 16px 32px}
+  .home .asksec{margin:0;padding:0 0 32px}
 }
 </style>
 
