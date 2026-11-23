@@ -54,7 +54,7 @@ These rules decide every judgement call:
 4. **AI styling never touches money.** Figures, the payments table, the confirm sheet and the commit button stay plain. Once the person approves, the prepared action loses its edge and glow and turns to the subtle tone.
 5. **Asks to the assistant are chips; acts on the platform are buttons.** A chip is white with a 1px blue-200 edge and navy text. The one commit in view is a navy button (48 high). Secondary acts are white buttons with a 1px dark edge. No text links, no arrows.
 6. **Read, then comprehend, then act.** In a turn: the question, the work summary, the answer sentence (read); the breakdown, the chart, the table (comprehend); then the prepared action and the asks (act), which end the turn just above the pinned assist bar. On home the ask field is an exception, by an earlier decision: it sits high, between the figures card and the insights, so it is easy to see and reach. It scrolls with the page; nothing on home is pinned. Once the assist is active, the field travels to the bar pinned at the bottom. Actions that belong to one insight stay inside that insight's card.
-7. **Charts are instruments, in the system's series:** navy (chart-1) for the thing that matters, teal (chart-2) and light blue (chart-3) for the rest. Bars start from zero. Never a line through weekly or daily totals. Labels are real 14px text, never scaled.
+7. **Charts are instruments, in the system's series** (the shared rules are `design/CHARTS.md` in the Brightline Onboarding project; their substance is here). Pick the form by the job: counts of items are cells, one ratio per row is a meter with its whole stated, change over time is columns from zero on a dated axis, dates against a plan are a timeline. A bar whose length is not on a stated scale is decoration and is removed. Every mark has a tooltip; columns are at most 40 wide; all chart text is 14px HTML. navy (chart-1) for the thing that matters, teal (chart-2) and light blue (chart-3) for the rest. Bars start from zero. Never a line through weekly or daily totals. Labels are real 14px text, never scaled.
 8. **Status is a coloured word, never a pill:** success green, error red, warning amber.
 9. **Nothing moves the flow on except the person.** The experience waits at the ask field, at send, at each ask (the chip or the bar) and at the approval.
 
@@ -326,10 +326,10 @@ Each entry: anatomy (outer to inner), layout, tokens, variants and properties, i
 
 ### 5.3 `Hero figures`
 - A card across home grid columns 1–2. Auto layout horizontal, gap 32, two columns at 1.3 : 1.
-- Left column, vertical: "Paid out this week" `Body/Default` text/secondary · "$38,420.00" `Figure/Large`, 8 above and below · delta line `Body/Default` text/secondary: "−$8,490.00" in text/error, then " · 18.1% below last week" · bar strip, pinned to the bottom of the column (at least 16 above): eight bars from zero, height 96, gap 10, radius 3 at the top, chart/3, this week chart/1 (values in §11). No axes, no labels.
+- Left column, vertical: "Paid out this week" `Body/Default` text/secondary · "$38,420.00" `Figure/Large`, 8 above and below · delta line `Body/Default` text/secondary: "−$8,490.00" in text/error, then " · 18.1% below last week" · **mini column chart**, 24 above, filling the rest of the column's height (at least 96): eight columns from zero on a $0–$50,000 scale, each centred in an equal slot (gap 8), at most 32 wide, top corners radius 4, chart/3, this week chart/1; a 1px border/default baseline; under it three axis labels in `Body/Default` chart/axis: "28 Sep" left, "8 weeks" centre (text/tertiary), "16 Nov" right. Each column has a hover tooltip (§5.10) with the week and the amount; the hovered column turns chart/2 (this week stays chart/1).
 - Right column: a 1px border/subtle on its left edge and 32 padding left; three rows divided by 1px border/subtle, each padding 16 / 0 (the first has no top padding or rule): label `Body/Default` text/secondary · value `Figure/Medium` · note `Body/Default` text/tertiary with a coloured delta.
   - Gross volume / $214,860.40 / "+3.2%" (text/success) " on last week" · Payment success / 94.1% / "−2.3 pts" (text/error) " on last week" · Open disputes / 3 / "$2,640.00 held".
-- Mobile: one column. The large figure is 40 and the bar strip 72 high. The right column becomes three stacked rows, each with a 1px border/subtle top rule and padding 12 / 0: label and note on the left, the figure (20 / 28) right aligned.
+- Mobile: one column. The large figure is 40 and the mini chart 72 high with gap 4. The right column becomes three stacked rows, each with a 1px border/subtle top rule and padding 12 / 0: label and note on the left, the figure (20 / 28) right aligned.
 
 ### 5.4 `Ask field` (home)
 - Frame fill width, min height 56, radius 12, auto layout horizontal, padding 8 / 8 / 8 / 20, gap 16, align centre. Fill bg/page with `AI/Edge` behind. No shadow.
@@ -401,13 +401,12 @@ payments     where status = declined and decline_code = authentication_required
 - Header: auto layout horizontal space-between, wrap: "Payouts, last 8 weeks" `Heading/Section` and "dashed line: the 7-week average, $44,096 · green: what retrying recovers" `Body/Default` text/tertiary.
 - Plot, 24 above: a y-axis column 48 wide and a plot 200 high.
   - Y axis $0, $30k, $60k: `Body/Default` chart/axis, right aligned, centred on their lines. Grid lines at $30k and $60k: 1px chart/grid, dotted. Baseline at $0: 1px border/default, solid.
-  - Eight bars from zero in eight equal columns, gap 8, top corners radius 4: weeks 1 to 7 chart/3, this week (16 Nov) chart/1. Heights are value ÷ $60,000 of the plot (§11).
-  - This week's value "$38,420" sits inside the top of its bar: `Body/Strong` white, centred, 8 from the top.
-  - Recoverable: a block on top of this week's bar from $38,420 to $42,632, same width, fill status/success-bg, 1.5px dashed status/success-strong on the top and sides, top corners radius 4. Its label "+$4,212" `Body/Strong` text/success, centred 4 above it.
+  - Eight columns from zero, each centred in an equal slot (gap 8), **at most 40 wide**, top corners radius 4: weeks 1 to 7 chart/3, this week (16 Nov) chart/1. Heights are value ÷ $60,000 of the plot (§11).
+  - Recoverable: a block on top of this week's column from $38,420 to $42,632, the column's width, fill status/success-bg, 1.5px dashed status/success-strong on the top and sides, top corners radius 4. Its label "+$4,212" `Body/Strong` text/success, centred 4 above it.
   - The 7-week average: a 1.5px dashed chart/2 line across the plot at $44,096. No label in the plot; the header names it.
-  - X labels under the plot, `Body/Default` chart/axis, centred under their columns: 5 Oct, 19 Oct, 2 Nov, 16 Nov.
+  - X labels under the plot, `Body/Default` chart/axis, centred under their columns: 5 Oct, 19 Oct, 2 Nov, 16 Nov. Under "16 Nov" (text/primary), this week's value "$38,420" in `Body/Strong`: the latest value is labelled at the axis, never inside a narrow column.
 - Hover state (component `Bar tooltip`): the hovered bar turns chart/2; a tooltip above it, fill chart/tooltip, radius 8, padding 8 / 12, two lines (line height 20): "9 Nov" in white 400 and "$46,910.00" in white 600. Tooltips on the first two columns align left, on the last two align right; none on this week's bar.
-- Mobile: y-axis column 40, plot 160 high, gap 4; the value inside this week's bar is hidden and "+$4,212" aligns right.
+- Mobile: y-axis column 40, plot 160 high, gap 4; "+$4,212" aligns right.
 
 ### 5.11 `Prepared action`
 - The one surface in a turn: fill bg/page, radius 12, padding 24, no shadow, `AI/Edge` State=Prepared behind. A two-column grid: content (fill) and the button (hug), gap 8 / 32, aligned centre.
@@ -639,7 +638,7 @@ These are the defaults that make it look generic. If you catch yourself reaching
 - A colour that is not a Design System Labs token, except the three flow colours on the AI flourish.
 - A gradient anywhere but the AI edge, the mark and the spinner: no gradient backgrounds, washes, chart fills or brand tiles.
 - Blue text links, underlined words as actions, "→" or "↗" arrows, "See more", "Learn more". Asks are chips; acts are buttons.
-- A line or area chart through weekly or daily totals; bars that do not start at zero; labels drawn inside a scaled SVG.
+- A line or area chart through weekly or daily totals; bars that do not start at zero; labels drawn inside a scaled SVG; a progress-style bar whose length means nothing; chunky columns that fill their slot; a chart with no hover.
 - An action or an ask placed above the evidence it depends on.
 - The home ask field moved to the end of the page, or pinned or sticky: it sits between the figures and the insights, and the bar is pinned only in assist mode.
 - The assistant's centred reading column on home.

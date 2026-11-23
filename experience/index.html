@@ -1143,6 +1143,33 @@ tr.sel .cb{background:var(--navy)}
 @container (max-width:600px){
   .home{grid-template-areas:"ph" "bh" "hero" "ask" "lead" "i2" "i3"}
 }
+
+/* ===================== Charts (design/CHARTS.md, Nov 23, 2026) =====================
+   Columns are at most 40px wide, centred in their slot; every mark has a tooltip; all text is HTML at 14px. */
+.hero .hspark{display:none}
+.hmini{flex:1;margin-top:0;padding-top:24px;display:flex;flex-direction:column;gap:8px}
+.hmini .mp{flex:1;min-height:96px;height:auto!important}
+.hmini .mp{position:relative;height:96px;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;align-items:end;border-bottom:1px solid var(--sds-border-default)}
+.hmini .mc{position:relative;height:100%;display:flex;align-items:flex-end;justify-content:center;outline:none}
+.hmini .mc i{display:block;width:100%;max-width:32px;border-radius:4px 4px 0 0;background:var(--sds-chart-3)}
+.hmini .mc.now i{background:var(--sds-chart-1)}
+.hmini .mc:hover i{background:var(--sds-chart-2)} .hmini .mc.now:hover i{background:var(--sds-chart-1)}
+.hmini .mx{display:flex;justify-content:space-between;color:var(--sds-chart-axis-label);line-height:24px}
+.hmini .mx span:nth-child(2){color:var(--c-3)}
+.hmini .tip,.wc .tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);z-index:3;display:grid;padding:8px 12px;border-radius:8px;background:var(--sds-chart-tooltip-bg);color:var(--sds-chart-tooltip-text);font-size:14px;line-height:20px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s}
+.hmini .tip b,.wc .tip b{font-weight:600}
+.hmini .mc:hover .tip,.hmini .mc:focus-visible .tip{opacity:1}
+.hmini .mc:nth-child(-n+2) .tip{left:0;transform:none} .hmini .mc:nth-last-child(-n+2) .tip{left:auto;right:0;transform:none}
+.wc{justify-content:center}
+.wbar{max-width:40px;margin:0 auto}
+.wrec{left:max(0px,calc(50% - 20px));right:max(0px,calc(50% - 20px))}
+.wrec .wl{left:auto;right:0;transform:none}
+.wx span.now{display:grid;color:var(--c-ink)} .wx span.now b{font-weight:600}
+.wb{grid-template-rows:200px auto}
+@container (max-width:600px){
+  .hmini .mp{height:72px;gap:4px}
+  .wb{grid-template-rows:160px auto}
+}
 </style>
 
 </head>
@@ -1339,14 +1366,14 @@ payments     where status = declined and decline_code = authentication_required<
     var MAX=60000, n=W.length, avg=W.slice(0,7).reduce(function(s,d){return s+d[1];},0)/7, pct=function(v){ return (100*v/MAX).toFixed(2)+"%"; };
     var cols=W.map(function(d,i){ var last=i===n-1;
       return '<div class="wc'+(last?' now':'')+'" tabindex="0" aria-label="Week of '+d[0]+', '+money(d[1])+'">'
-        +'<div class="wbar" data-h="'+pct(d[1])+'" style="transition-delay:'+(i*70)+'ms">'+(last?'<span class="wv">$38,420</span>':'')+'</div>'
+        +'<div class="wbar" data-h="'+pct(d[1])+'" style="transition-delay:'+(i*70)+'ms"></div>'
         +(last?'<div class="wrec" style="bottom:'+pct(d[1])+';height:'+pct(4212)+'"><span class="wl" id="reclab">+$4,212</span></div>':'')
         +'<span class="tip">'+d[0]+'<b>'+money(d[1])+'</b></span></div>' }).join('');
     host.innerHTML='<div class="wb" role="img" aria-label="Weekly payouts for eight weeks. This week $38,420, down from $46,910. Retrying the declined payments would recover $4,212.">'
       +'<div class="wy"><span style="bottom:100%">$60k</span><span style="bottom:50%">$30k</span><span style="bottom:0">$0</span></div>'
       +'<div class="wplot"><i class="gl" style="bottom:100%"></i><i class="gl" style="bottom:50%"></i><i class="gl base" style="bottom:0"></i>'
       +'<i class="avg" style="bottom:'+pct(avg)+'"></i>'+cols+'</div>'
-      +'<div class="wx">'+W.map(function(d,i){ return '<span>'+(i%2===1||i===n-1?d[0]:'')+'</span>' }).join('')+'</div></div>';
+      +'<div class="wx">'+W.map(function(d,i){ return '<span'+(i===n-1?' class="now"':'')+'>'+(i%2===1||i===n-1?d[0]:'')+(i===n-1?'<b>$38,420</b>':'')+'</span>' }).join('')+'</div></div>';
     CH={host:host, rl:$("reclab")};
   }
   function drawChart(ctx){
@@ -1432,9 +1459,12 @@ payments     where status = declined and decline_code = authentication_required<
   function suggest(t){ var ct=$("ctext"); ct.textContent=t; ct.style.color=""; $("csend").style.background=""; $("cbox").classList.add("suggest"); }
   async function accept(ctx){ $("cbox").classList.remove("suggest"); $("ctext").style.color="var(--c-ink)"; $("csend").style.background="var(--c-ink)"; await wait(ctx,450); }
   function clearComposer(){ $("cbox").classList.remove("suggest"); var ct=$("ctext"); ct.textContent=stage.dataset.state==="answer"?"Ask a follow-up":HOMEPH; ct.style.color=""; $("csend").style.background=""; }
-  /* the hero's eight weeks: bars from zero, this week in navy */
-  function buildSpark(){ var sv=$("spark"); if(!sv||sv.childNodes.length) return; var w=560,h=96,mx=50000,gap=10,bw=(w-gap*7)/8;
-    W.forEach(function(d,i){ var bh=(d[1]/mx)*(h-4); sv.appendChild(el("rect",{x:(i*(bw+gap)).toFixed(1),y:(h-bh).toFixed(1),width:bw.toFixed(1),height:bh.toFixed(1),rx:3,class:i===W.length-1?"sb now":"sb"})); }); }
+  /* the hero's eight weeks: a small column chart from zero, in HTML, dated, this week in navy, a tooltip per week */
+  function buildSpark(){ var sv=$("spark"); if(!sv) return; var host=sv.parentNode, old=host.querySelector(".hmini"); if(old) old.remove();
+    var mx=50000, n=W.length, d=document.createElement("div"); d.className="hmini"; d.setAttribute("role","img"); d.setAttribute("aria-label","Paid out, last 8 weeks: from $41,200 on 28 Sep to $38,420 this week");
+    d.innerHTML='<div class="mp">'+W.map(function(w,i){ return '<div class="mc'+(i===n-1?' now':'')+'" tabindex="0"><i style="height:'+(100*w[1]/mx).toFixed(1)+'%"></i><span class="tip">'+w[0]+'<b>'+money(w[1])+'</b></span></div>' }).join('')+'</div>'
+      +'<div class="mx"><span>'+W[0][0]+'</span><span>8 weeks</span><span>'+W[n-1][0]+'</span></div>';
+    host.insertBefore(d,sv); sv.style.display="none"; }
 
   var PAY=[["Orchard Lane Café","17 Nov","4471",312.40],["Pell & Daughters","17 Nov","0932",189.00],["Norrow Bakehouse","18 Nov","7710",455.75],["Kite Street Deli","18 Nov","2286",98.20],["Ashby Market","19 Nov","5103",260.00],["Larch Hotel Group","19 Nov","6648",731.10],["Fenwick Florists","20 Nov","3390",144.85],["Marlow Provisions","21 Nov","8821",205.50]];
   function fillPays(){
