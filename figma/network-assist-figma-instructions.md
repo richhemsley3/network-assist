@@ -5,11 +5,7 @@ You are building the **Network Assist** agent experience in Figma: foundations, 
 - **Reference build (open it, click through it):** https://richhemsley3.github.io/network-assist/experience/ (refresh to start over; narrow the window below 600px for mobile; add `?to=3` to open on the built answer, `?to=4` on the drill-down, `?to=5` on the retry)
 - **Source:** https://github.com/richhemsley3/network-assist (`experience/index.html` is one self-contained file; its last `<style id="v5">` block is the ground truth if this file and the build ever disagree)
 
-**Version 2, November 23, 2026.** The visual language is now the one built for Brightline Onboarding: the Design System Labs palette applied by its semantic tokens, Proxima Nova, nothing under 14px, an 8px grid, and surfaces only for what waits on the person or floats. The flow, the copy and the data are unchanged from version 1. If you built version 1, rebuild the foundations and the components; the screens and the prototype keep their structure.
-
-**Version 2.1, the same day.** Cards come back where they belong: on home, the figures and each insight are cards; in a turn, the composed objects (breakdown, chart, payments table, receipt) are cards, while the words stay on the page. The page is warm grey 025 so cards read as objects. The AI's gradient border is drawn on top of its element's fill and must be visible all the way round, not just the glow.
-
-**Version 2.2, the same day.** Home is a normal page, not the assistant's centred column: a page title, the briefing as a lead, and a full-width card grid. Every screen now follows reading order, **read, then comprehend, then act**: on home the ask field sits high, between the figures and the insights, in the page flow (it moves to the pinned bar only in assist mode); in a turn the evidence comes before the prepared action and the asks, which sit just above the pinned bar. This reverses version 2's "action before evidence".
+**Version 3, November 23, 2026.** One current spec; what changed since version 1 is in §14. The visual language is shared with Brightline Onboarding and Brightline Assist: the Design System Labs palette by its semantic tokens, Proxima Nova, nothing under 14px, an 8px grid, language on the page and composed objects in cards, the multicolour AI border on the assistant's own objects, and every turn in reading order (read, then comprehend, then act).
 
 Scope is the agent experience only. Do not build the preview frame, chapter controls, device switch, notes or the direction boards that sit around the prototype.
 
@@ -54,9 +50,10 @@ These rules decide every judgement call:
 4. **AI styling never touches money.** Figures, the payments table, the confirm sheet and the commit button stay plain. Once the person approves, the prepared action loses its edge and glow and turns to the subtle tone.
 5. **Asks to the assistant are chips; acts on the platform are buttons.** A chip is white with a 1px blue-200 edge and navy text. The one commit in view is a navy button (48 high). Secondary acts are white buttons with a 1px dark edge. No text links, no arrows.
 6. **Read, then comprehend, then act.** In a turn: the question, the work summary, the answer sentence (read); the breakdown, the chart, the table (comprehend); then the prepared action and the asks (act), which end the turn just above the pinned assist bar. On home the ask field is an exception, by an earlier decision: it sits high, between the figures card and the insights, so it is easy to see and reach. It scrolls with the page; nothing on home is pinned. Once the assist is active, the field travels to the bar pinned at the bottom. Actions that belong to one insight stay inside that insight's card.
-7. **Charts are instruments, in the system's series** (the shared rules are `design/CHARTS.md` in the Brightline Onboarding project; their substance is here). Pick the form by the job: counts of items are cells, one ratio per row is a meter with its whole stated, change over time is columns from zero on a dated axis, dates against a plan are a timeline. A bar whose length is not on a stated scale is decoration and is removed. Every mark has a tooltip; columns are at most 40 wide; all chart text is 14px HTML. navy (chart-1) for the thing that matters, teal (chart-2) and light blue (chart-3) for the rest. Bars start from zero. Never a line through weekly or daily totals. Labels are real 14px text, never scaled.
+7. **Charts are instruments, in the system's series** (the shared chart rules for the assistant prototypes; their substance is all here). Pick the form by the job: counts of items are cells, one ratio per row is a meter with its whole stated, change over time is columns from zero on a dated axis, dates against a plan are a timeline. A bar whose length is not on a stated scale is decoration and is removed. Every mark has a tooltip; columns are at most 40 wide; all chart text is 14px HTML. navy (chart-1) for the thing that matters, teal (chart-2) and light blue (chart-3) for the rest. Bars start from zero. Never a line through weekly or daily totals. Labels are real 14px text, never scaled.
 8. **Status is a coloured word, never a pill:** success green, error red, warning amber.
-9. **Nothing moves the flow on except the person.** The experience waits at the ask field, at send, at each ask (the chip or the bar) and at the approval.
+9. **Suggestions do not persist.** Once the person acts (clicks an ask, accepts the bar's suggestion, or approves), the asks rows in earlier turns leave the feed. New suggestions appear at the end of the latest turn, just above the bar.
+10. **Nothing moves the flow on except the person.** The experience waits at the ask field, at send, at each ask (the chip or the bar) and at the approval.
 
 ---
 
@@ -270,11 +267,12 @@ All icons are strokes (round caps and joins) inside a square frame named as belo
 
 ### 4.2 `Chip` (an ask to the assistant)
 - Auto layout horizontal, hug, height 40, padding 0 / 16, radius 10, centred. Fill bg/page, inner stroke 1px chip/edge. Text `Body/Strong` text/link.
-- Variants `State`: Default · Hover (fill bg/subtle) · Answered (stroke border/subtle, text text/tertiary; not clickable): a chip in a turn the person has moved on from.
+- Variants `State`: Default · Hover (fill bg/subtle).
 - Property: `Label`.
 
 **`Asks row`** (component): auto layout horizontal, wrap, gap 12, align centre. A label (`Mark/Assistant` + text, gap 12, `Body/Default` text/voice, 4 right margin) then one or more `Chip`s.
 - First turn: "Before you decide" + "Show me the declined ones". Second turn: "Suggested" + "Retry them". A row with no framing label (like "Before you decide") is always labelled "Suggested", so it is clear the chips are proposals from the assistant.
+- **Lifetime:** an asks row lives until the person acts. Then it is removed from the feed, not greyed out; the next turn brings its own row.
 
 ### 4.3 The AI edge (`AI/Edge`)
 
@@ -523,7 +521,7 @@ The evidence arrives first, then the action; the view follows down so the turn e
 | Step | Spec |
 |---|---|
 | Blocks waiting to appear | Take no space until they appear (no blank reserved areas while the answer composes), then rise in: opacity 0 → 1, y +10 → 0, 700 ms ease/standard |
-| Accept a suggestion (the bar, Tab, or the chip) | The chips in the turn just left go to Answered. The bar's text turns from the voice colour to ink and Send becomes Ready; 450 ms later the question travels from the bar into the new turn's title (FLIP, 650 ms ease/out) and the bar goes to Working |
+| Accept a suggestion (the bar, Tab, or the chip) | The asks row in the turn just left is removed from the feed. The bar's text turns from the voice colour to ink and Send becomes Ready; 450 ms later the question travels from the bar into the new turn's title (FLIP, 650 ms ease/out) and the bar goes to Working |
 | Turn 2 | Trace runs and folds; sentence word by word; the payments card reveals. Rows appear: opacity 0 → 1, y +8 → 0, 420 ms, 70 ms apart. After 350 ms, each row selects in turn 90 ms apart: checkbox fill 250 ms ease/standard, check pops (scale 0.4 → 1, 300 ms ease/pop) while the footer total climbs; it ends on "19 selected · $4,212.00"; 400 ms later the asks row reveals under the table |
 | Turn 3 | Trace runs and stays visible; sentence fades in word by word; Prepared action appears and blooms; the bar goes to Landed and offers nothing further |
 
@@ -554,7 +552,7 @@ Build each as a full frame using only components. Desktop frames 1440 × 900 on 
 | 06 | `Answer / Built` | Work summary (Steps Closed), answer sentence, Breakdown card, Chart card, Prepared action Waiting, Asks row; assist bar Suggesting "Show me the declined ones" |
 | 07 | `Answer / Steps open` | 06 with Steps Open and the Query block |
 | 08 | `Answer / Chart hover` | 06 scrolled to the chart with the tooltip on 9 Nov |
-| 09 | `Drill / Built` | Turn 1's chips Answered; Turn 2: title, summary, sentence, Payments card with all rows selected, Asks row; assist bar Suggesting "Retry them" |
+| 09 | `Drill / Built` | Turn 1's asks row gone; Turn 2: title, summary, sentence, Payments card with all rows selected, Asks row; assist bar Suggesting "Retry them" |
 | 10 | `Retry / Prepared` | Turn 3: title, trace (both Done), sentence, Prepared action Waiting; assist bar Idle |
 | 11 | `Retry / Confirm` | 10 with the scrim and the Confirm sheet |
 | 12 | `Retry / Receipt` | Prepared action Approved; Receipt Running (4 of 19, $1,055.35, 9:58) |
@@ -641,6 +639,7 @@ These are the defaults that make it look generic. If you catch yourself reaching
 - Blue text links, underlined words as actions, "→" or "↗" arrows, "See more", "Learn more". Asks are chips; acts are buttons.
 - A line or area chart through weekly or daily totals; bars that do not start at zero; labels drawn inside a scaled SVG; a progress-style bar whose length means nothing; chunky columns that fill their slot; a chart with no hover.
 - An action or an ask placed above the evidence it depends on.
+- Old suggestion rows left in the feed after the person has acted, greyed out or not.
 - The home ask field moved to the end of the page, or pinned or sticky: it sits between the figures and the insights, and the bar is pinned only in assist mode.
 - The assistant's centred reading column on home.
 - A sparkle or star icon for AI; a filled gradient dot; the word "Assistant" repeated beside every mark.
@@ -667,4 +666,17 @@ These are the defaults that make it look generic. If you catch yourself reaching
 - [ ] The Motion page has an annotated frame for every row in §7.
 - [ ] Copy matches §10 character for character; numbers match §11.
 - [ ] Nothing in §12 appears anywhere.
+- [ ] After every click that moves the flow on, the previous turn’s asks row is gone from the feed.
 - [ ] Compare each frame side by side with the reference build at the same size; list any difference you could not resolve.
+
+---
+
+## 14. Change log
+
+- **Version 1 (November 21, 2026).** Material surfaces on a cool ground, Figtree, the violet voice, Heritage orange for the commit, the Ring.
+- **Version 2 (November 23).** The Brightline Onboarding language: Design System Labs tokens, Proxima Nova, 14px minimum, an 8px grid, chips for asks, navy commit, HTML bars from zero. Rebuild the foundations and components if you built version 1.
+- **2.1.** Cards where they belong (home modules and composed objects); warm-grey 025 page; the AI border drawn over its element's fill, visible all the way round.
+- **2.2.** Home as a full-width page with a title and a card grid; turns in reading order (evidence before the action, reversing 2's "action before evidence"); the home ask between the figures and the insights, never at the end or pinned.
+- **Charts.** A dated mini column chart on home; payout columns at most 40 wide with this week's value under its date; every mark has a tooltip; no bar whose length means nothing.
+- **Labels and space.** Chip rows without a framing label read "Suggested"; blocks waiting to appear take no space.
+- **Version 3.** One current spec. Suggestions do not persist after the person acts.

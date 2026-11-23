@@ -1177,6 +1177,9 @@ tr.sel .cb{background:var(--navy)}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .s-answer .reveal:not(.in){display:none}
 .s-answer .reveal.in{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+
+/* suggestions do not persist: once she acts, the earlier asks row leaves the feed */
+.s-answer .recs.done{display:none}
 </style>
 
 </head>

@@ -14,7 +14,7 @@ A creative-direction prototype for a language-first AI assistant inside a paymen
 | [Prototype](https://richhemsley3.github.io/network-assist/) | The same experience inside a preview frame, with chapters, a desktop/mobile switch and notes on motion. It waits for you at each step: click the ask field, press send, accept each suggested follow-up (click it or press Tab), then review and approve the retry. Chapters jump to any step; desktop and mobile. |
 | [AI element directions](https://richhemsley3.github.io/network-assist/directions/ai-elements.html) | Six treatments for the assistant's own elements: ring, edge light, spine, hard stops, wash and night. Ring was chosen. |
 | [Layout comparison](https://richhemsley3.github.io/network-assist/directions/layouts.html) | An early comparison of three layouts: centred column, canvas with thread, and document. |
-| [Figma instructions](figma/network-assist-figma-instructions.md) | Instructions for Claude to build the agent experience in Figma: tokens, type, effects, every component and state, motion, screens, prototype wiring, copy and data. Version 2 follows the agent experience as it is now. |
+| [Figma instructions](figma/network-assist-figma-instructions.md) | Instructions for Claude to build the agent experience in Figma: tokens, type, effects, every component and state, motion, screens, prototype wiring, copy and data. Version 3 is one current spec for the agent experience as it is now, with a change log. |
 | [Polish directions](https://richhemsley3.github.io/network-assist/directions/polish.html) | Editorial, Instrument, and Material and light. Material was chosen, without the background light. |
 
 ## The story
@@ -31,7 +31,7 @@ A creative-direction prototype for a language-first AI assistant inside a paymen
 - Type is Proxima Nova, light for large figures. Nothing is smaller than 14px, and spacing sits on an 8px grid.
 - Language on the page, objects in cards. The assistant's sentences, the question, the trace and the asks sit on a warm grey page; the home figures and insights, and in each answer the breakdown, chart, table and receipt, are white cards. Turns are divided by one rule.
 - The AI flourish is the multicolour flow: a gradient of blue, periwinkle and orange drifting along a 1.5px border on the ask field, the bar and the prepared action, with a soft glow behind it, plus the ring mark and the spinner. It never touches money.
-- Asks to the assistant are chips; acts are buttons, with one navy commit in view. No text links and no arrows.
+- Asks to the assistant are chips; acts are buttons, with one navy commit in view. No text links and no arrows. A chip row without a framing label reads Suggested, and once you act the earlier rows leave the feed.
 - Read, then comprehend, then act: on home the ask field sits between the figures and the insights; in each answer the evidence comes before the prepared action and the asks. Home is a full-width page; only the conversation uses a centred column. Charts are bars from zero in the system's chart series, with labels at true size.
 
 ## Notes
