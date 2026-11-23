@@ -274,7 +274,7 @@ All icons are strokes (round caps and joins) inside a square frame named as belo
 - Property: `Label`.
 
 **`Asks row`** (component): auto layout horizontal, wrap, gap 12, align centre. A label (`Mark/Assistant` + text, gap 12, `Body/Default` text/voice, 4 right margin) then one or more `Chip`s.
-- First turn: "Before you decide" + "Show me the declined ones". Second turn: "Next" + "Retry them".
+- First turn: "Before you decide" + "Show me the declined ones". Second turn: "Suggested" + "Retry them". A row with no framing label (like "Before you decide") is always labelled "Suggested", so it is clear the chips are proposals from the assistant.
 
 ### 4.3 The AI edge (`AI/Edge`)
 
@@ -522,6 +522,7 @@ The evidence arrives first, then the action; the view follows down so the turn e
 ### 7.5 Follow-ups
 | Step | Spec |
 |---|---|
+| Blocks waiting to appear | Take no space until they appear (no blank reserved areas while the answer composes), then rise in: opacity 0 → 1, y +10 → 0, 700 ms ease/standard |
 | Accept a suggestion (the bar, Tab, or the chip) | The chips in the turn just left go to Answered. The bar's text turns from the voice colour to ink and Send becomes Ready; 450 ms later the question travels from the bar into the new turn's title (FLIP, 650 ms ease/out) and the bar goes to Working |
 | Turn 2 | Trace runs and folds; sentence word by word; the payments card reveals. Rows appear: opacity 0 → 1, y +8 → 0, 420 ms, 70 ms apart. After 350 ms, each row selects in turn 90 ms apart: checkbox fill 250 ms ease/standard, check pops (scale 0.4 → 1, 300 ms ease/pop) while the footer total climbs; it ends on "19 selected · $4,212.00"; 400 ms later the asks row reveals under the table |
 | Turn 3 | Trace runs and stays visible; sentence fades in word by word; Prepared action appears and blooms; the bar goes to Landed and offers nothing further |
@@ -605,7 +606,7 @@ Use these strings exactly, including typographic characters (− minus, · middl
 
 **Assist bar:** Ask a follow-up · Show me the declined ones · Retry them · Tab
 
-**Turn 2:** Show me the declined ones · Filtered the 19 declined payments and checked each card's bank · 2 steps · These are the 19 payments Westmoor Bank declined with “authentication required”. Every one can be retried, so I've selected them all. · Next · Retry them · All 19 · Over $200 · Repeat customers · Customer · Declined · Card · Amount · 11 more · $1,815.20 · 19 selected · $4,212.00
+**Turn 2:** Show me the declined ones · Filtered the 19 declined payments and checked each card's bank · 2 steps · These are the 19 payments Westmoor Bank declined with “authentication required”. Every one can be retried, so I've selected them all. · Suggested · Retry them · All 19 · Over $200 · Repeat customers · Customer · Declined · Card · Amount · 11 more · $1,815.20 · 19 selected · $4,212.00
 
 **Turn 3:** Retry them · It's prepared. Nothing is sent until you confirm. · Retry 19 payments from Westmoor Bank cardholders · $4,212.00 · settles to the payout on Mon 24 Nov · Approved by you at 4:12 pm
 

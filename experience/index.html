@@ -1170,6 +1170,13 @@ tr.sel .cb{background:var(--navy)}
   .hmini .mp{height:72px;gap:4px}
   .wb{grid-template-rows:160px auto}
 }
+
+/* ══ no dead space (Rich, Nov 23: "Sometimes there's dead space when I scroll in agent assist mode.")
+   A block waiting to appear takes no space until it does, then rises in; the room under the conversation is the bar's
+   height plus 32, not stacked paddings. Chip rows with no framing label read "Suggested". ══ */
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.s-answer .reveal:not(.in){display:none}
+.s-answer .reveal.in{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
 </style>
 
 </head>
@@ -1292,7 +1299,7 @@ payments     where status = declined and decline_code = authentication_required<
               <table class="pays"><thead><tr><th style="width:30px"></th><th>Customer</th><th class="hm">Declined</th><th class="hm">Card</th><th class="num">Amount</th></tr></thead><tbody id="paybody"></tbody></table>
               <div class="tfoot"><span>11 more · $1,815.20</span><b id="selsum">0 selected</b></div>
             </div>
-            <div class="recs reveal" id="next2"><span class="k"><i class="aimark"></i>Next</span><button type="button" class="chip" data-ask>Retry them</button></div>
+            <div class="recs reveal" id="next2"><span class="k"><i class="aimark"></i>Suggested</span><button type="button" class="chip" data-ask>Retry them</button></div>
           </div>
 
           <!-- TURN 3 -->
