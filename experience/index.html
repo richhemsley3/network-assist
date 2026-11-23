@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Network Assist: a language-first AI assistant for a payments platform. Refresh to start over.">
 <title>Network Assist</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&display=swap">
 <style>
 /* Layout: the prototype is the page. A short header, a transport bar (chapters, replay, device), then one live stage that plays Search → Query → Build → Drill down → Retry. Notes on motion follow. */
 @property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
@@ -631,6 +628,435 @@ html,body{margin:0;height:100%;overflow:hidden;background:#F6F6FB}
 .stagewrap{display:block;padding:0;overflow:visible}
 .stage,.stage[data-device="mobile"]{width:100vw;height:100vh;height:100dvh;border-radius:0;box-shadow:none;transition:none}
 </style>
+<style id="tokens">
+/* Design System Labs colour tokens, light set (from design-system-labs tokens/colors.css) */
+:root {
+  --sds-color-cool-gray-025: #F8F8F9;
+  --sds-color-cool-gray-050: #F2F3F4;
+  --sds-color-cool-gray-100: #E2E4E6;
+  --sds-color-cool-gray-150: #DADCDE;
+  --sds-color-cool-gray-200: #CACCCF;
+  --sds-color-cool-gray-250: #B8BCC0;
+  --sds-color-cool-gray-300: #A8AEB2;
+  --sds-color-cool-gray-350: #989FA5;
+  --sds-color-cool-gray-400: #8B9298;
+  --sds-color-cool-gray-450: #7F858B;
+  --sds-color-cool-gray-500: #6F757B;
+  --sds-color-cool-gray-550: #666C72;
+  --sds-color-cool-gray-600: #5B6066;
+  --sds-color-cool-gray-650: #4F5459;
+  --sds-color-cool-gray-700: #40454A;
+  --sds-color-cool-gray-750: #34383D;
+  --sds-color-cool-gray-800: #2B2E33;
+  --sds-color-cool-gray-850: #1F2326;
+  --sds-color-cool-gray-900: #14171A;
+  --sds-color-cool-gray-950: #0E1012;
+  --sds-color-cool-gray-975: #0A0B0D;
+  --sds-color-warm-gray-025: #FAF8F5;
+  --sds-color-warm-gray-050: #F4F1EB;
+  --sds-color-warm-gray-100: #EBE6DD;
+  --sds-color-warm-gray-150: #E0DCD3;
+  --sds-color-warm-gray-200: #D0CBC3;
+  --sds-color-warm-gray-250: #BFBAB2;
+  --sds-color-warm-gray-300: #B0ABA2;
+  --sds-color-warm-gray-350: #A39E96;
+  --sds-color-warm-gray-400: #948E85;
+  --sds-color-warm-gray-450: #858079;
+  --sds-color-warm-gray-500: #7A756F;
+  --sds-color-warm-gray-550: #6B6760;
+  --sds-color-warm-gray-600: #615D55;
+  --sds-color-warm-gray-650: #54514D;
+  --sds-color-warm-gray-700: #47443F;
+  --sds-color-warm-gray-750: #3B3834;
+  --sds-color-warm-gray-800: #302D28;
+  --sds-color-warm-gray-850: #26231E;
+  --sds-color-warm-gray-900: #1C1A17;
+  --sds-color-warm-gray-950: #14110D;
+  --sds-color-warm-gray-975: #0F0902;
+  --sds-color-blue-025: #F2F7F7;
+  --sds-color-blue-050: #EBF4F5;
+  --sds-color-blue-100: #D9EBED;
+  --sds-color-blue-150: #C1DDE3;
+  --sds-color-blue-200: #A6CBD6;
+  --sds-color-blue-250: #8EC0D1;
+  --sds-color-blue-300: #77B2C7;
+  --sds-color-blue-350: #6AA5B8;
+  --sds-color-blue-400: #5E96AB;
+  --sds-color-blue-450: #4F8AA0;
+  --sds-color-blue-500: #427D94;
+  --sds-color-blue-550: #306E88;
+  --sds-color-blue-600: #216280;
+  --sds-color-blue-650: #17597A;
+  --sds-color-blue-700: #0C4A69;
+  --sds-color-blue-750: #013D5B;
+  --sds-color-blue-800: #05314D;
+  --sds-color-blue-850: #032740;
+  --sds-color-blue-900: #031E36;
+  --sds-color-blue-950: #00132B;
+  --sds-color-blue-975: #030515;
+  --sds-color-red-025: #FFF6F5;
+  --sds-color-red-050: #FFEEEB;
+  --sds-color-red-100: #FFE1DB;
+  --sds-color-red-150: #F7CCC6;
+  --sds-color-red-200: #F2BDB6;
+  --sds-color-red-250: #EEA79E;
+  --sds-color-red-300: #E99185;
+  --sds-color-red-350: #E57D6E;
+  --sds-color-red-400: #DB7060;
+  --sds-color-red-450: #CF6253;
+  --sds-color-red-500: #BF5547;
+  --sds-color-red-550: #AD4739;
+  --sds-color-red-600: #A33F31;
+  --sds-color-red-650: #8F3629;
+  --sds-color-red-700: #7A2E23;
+  --sds-color-red-750: #69261C;
+  --sds-color-red-800: #591E15;
+  --sds-color-red-850: #4A130C;
+  --sds-color-red-900: #330903;
+  --sds-color-green-025: #F4FAEB;
+  --sds-color-green-050: #EDF5DF;
+  --sds-color-green-100: #E2EDCC;
+  --sds-color-green-150: #D1E0B1;
+  --sds-color-green-200: #BBCF8A;
+  --sds-color-green-250: #AAC267;
+  --sds-color-green-300: #98B43B;
+  --sds-color-green-350: #88A61B;
+  --sds-color-green-400: #7A9A01;
+  --sds-color-green-450: #6D8C0F;
+  --sds-color-green-500: #62800B;
+  --sds-color-green-550: #527315;
+  --sds-color-green-600: #466B11;
+  --sds-color-green-650: #3E5917;
+  --sds-color-green-700: #374A1E;
+  --sds-color-green-750: #2E3D1C;
+  --sds-color-green-800: #273318;
+  --sds-color-green-850: #1D2613;
+  --sds-color-green-900: #161C0F;
+  --sds-color-yellow-025: #FCF9D9;
+  --sds-color-yellow-050: #FCF5B1;
+  --sds-color-yellow-100: #F7EC88;
+  --sds-color-yellow-150: #F0DE54;
+  --sds-color-yellow-200: #EBCE2D;
+  --sds-color-yellow-250: #D6BB31;
+  --sds-color-yellow-300: #C4AA25;
+  --sds-color-yellow-350: #B29B24;
+  --sds-color-yellow-400: #A48E1F;
+  --sds-color-yellow-450: #96811A;
+  --sds-color-yellow-500: #8A7515;
+  --sds-color-yellow-550: #7A6710;
+  --sds-color-yellow-600: #6E5B09;
+  --sds-color-yellow-650: #615109;
+  --sds-color-yellow-700: #544608;
+  --sds-color-yellow-750: #473B05;
+  --sds-color-yellow-800: #3B3002;
+  --sds-color-yellow-850: #2E2601;
+  --sds-color-yellow-900: #211B00;
+  --sds-color-purple-300: #C39DE3;
+  --sds-color-purple-550: #805AA1;
+  --sds-color-white: #FFFFFF;
+  --sds-color-black: #000000;
+  --sds-color-brand-midnight:      #00132B;
+  --sds-color-brand-atlantic:      #013D5B;
+  --sds-color-brand-pacific:       #A6CBD6;
+  --sds-color-brand-surf:          #D6E8EA;
+  --sds-color-brand-sky:           #C0EAF2;
+  --sds-color-brand-heritage-red:  #CC2427;
+  --sds-color-brand-prairie:       #ACBAA3;
+  --sds-color-brand-pistachio:     #DAE8D8;
+  --sds-color-brand-fern:          #7A9A01;
+  --sds-color-brand-birch:         #BF5547;
+  --sds-color-brand-parakeet:      #E1E000;
+  --sds-color-brand-lime:          #EBE6DD;
+  --sds-color-brand-oat:           #F7F3EB;
+  --sds-bg-page:      var(--sds-color-white);
+  --sds-bg-surface:   var(--sds-color-warm-gray-025);
+  --sds-bg-card:      var(--sds-color-white);
+  --sds-bg-elevated:  var(--sds-color-white);
+  --sds-bg-subtle:    var(--sds-color-warm-gray-050);
+  --sds-text-primary:    var(--sds-color-warm-gray-900);
+  --sds-text-secondary:  var(--sds-color-warm-gray-650);
+  --sds-text-tertiary:   var(--sds-color-warm-gray-550);
+  --sds-text-disabled:   var(--sds-color-warm-gray-300);
+  --sds-text-on-primary: var(--sds-color-white);
+  --sds-text-link:       var(--sds-color-blue-750);
+  --sds-border-default: var(--sds-color-warm-gray-150);
+  --sds-border-subtle:  var(--sds-color-warm-gray-100);
+  --sds-border-strong:  var(--sds-color-warm-gray-200);
+  --sds-border-focus:   var(--sds-color-blue-750);
+  --sds-interactive-primary:        var(--sds-color-blue-750);
+  --sds-interactive-primary-hover:  var(--sds-color-blue-800);
+  --sds-interactive-primary-active: var(--sds-color-blue-850);
+  --sds-interactive-primary-subtle: var(--sds-color-blue-100);
+  --sds-interactive-secondary:      var(--sds-color-white);
+  --sds-interactive-secondary-border: var(--sds-color-warm-gray-800);
+  --sds-nav-sidebar-bg:       var(--sds-color-warm-gray-025);
+  --sds-nav-item-active-bg:   var(--sds-color-blue-100);
+  --sds-nav-item-active-text: var(--sds-color-blue-750);
+  --sds-nav-item-text:        var(--sds-color-warm-gray-650);
+  --sds-nav-section-header:   var(--sds-color-warm-gray-550);
+  --sds-status-success-bg:     var(--sds-color-green-025);
+  --sds-status-success-text:   var(--sds-color-green-500);
+  --sds-status-success-strong: var(--sds-color-green-400);
+  --sds-status-warning-bg:     var(--sds-color-yellow-025);
+  --sds-status-warning-text:   var(--sds-color-yellow-500);
+  --sds-status-warning-strong: var(--sds-color-yellow-450);
+  --sds-status-error-bg:     var(--sds-color-red-050);
+  --sds-status-error-text:   var(--sds-color-red-500);
+  --sds-status-error-strong: var(--sds-color-red-450);
+  --sds-status-info-bg:   var(--sds-color-blue-050);
+  --sds-status-info-text: var(--sds-color-blue-700);
+  --sds-status-neutral-bg:   var(--sds-color-warm-gray-100);
+  --sds-status-neutral-text: var(--sds-color-warm-gray-650);
+  --sds-status-purple-bg:   #F7EEFF;
+  --sds-status-purple-text: var(--sds-color-purple-550);
+  --sds-chart-1: var(--sds-color-blue-750);      
+  --sds-chart-2: var(--sds-color-blue-450);       
+  --sds-chart-3: var(--sds-color-blue-200);       
+  --sds-chart-4: var(--sds-color-brand-birch);    
+  --sds-chart-5: var(--sds-color-brand-fern);     
+  --sds-chart-6: var(--sds-color-purple-550);     
+  --sds-chart-7: var(--sds-color-yellow-350);     
+  --sds-chart-8: var(--sds-color-red-350);        
+  --sds-chart-grid:       var(--sds-color-warm-gray-100);
+  --sds-chart-axis:       var(--sds-color-warm-gray-300);
+  --sds-chart-axis-label: var(--sds-color-warm-gray-550);
+  --sds-chart-tooltip-bg: var(--sds-color-warm-gray-900);
+  --sds-chart-tooltip-text: var(--sds-color-white);
+  --sds-chart-hover:      rgba(0, 0, 0, 0.06);
+  --sds-chart-bg:         var(--sds-color-white);
+}
+</style>
+<style id="v5">
+/* ===================== The onboarding language (Nov 23, 2026) =====================
+   The final layer, over everything above. Design System Labs by its semantic tokens (light set, inlined below).
+   Proxima Nova. 28 title · 22 action · 17 lead · 48 light figure · 14 for everything else; nothing under 14. An 8px grid.
+   Surfaces only for what waits on the person or floats: the prepared action (with the Ring), the bar, the sheet.
+   Everything else sits on the page; turns are divided by one rule. Asks are chips; the one commit is a navy button.
+   The AI flourish is the multicolour flow on the Ring, the mark and the spinner, and nowhere else. */
+@font-face{font-family:"Proxima Nova";src:local("Proxima Nova Light"),local("ProximaNova-Light"),url("fonts/ProximaNova-Light.otf") format("opentype");font-weight:300;font-display:swap}
+@font-face{font-family:"Proxima Nova";src:local("Proxima Nova"),local("ProximaNova-Regular"),url("fonts/ProximaNova-Reg.otf") format("opentype");font-weight:400;font-display:swap}
+@font-face{font-family:"Proxima Nova";src:local("Proxima Nova Semibold"),local("ProximaNova-Semibold"),url("fonts/ProximaNova-Sbold.otf") format("opentype");font-weight:600;font-display:swap}
+.stage{
+  --font:"Proxima Nova",-apple-system,"Segoe UI",Roboto,sans-serif; --mono:"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --navy:var(--sds-interactive-primary); --voice:var(--sds-status-info-text); --edge:var(--sds-border-default);
+  --c-bg:var(--sds-bg-page); --c-ink:var(--sds-text-primary); --c-2:var(--sds-text-secondary); --c-3:var(--sds-text-tertiary); --c-q:var(--sds-text-tertiary); --c-4:var(--sds-border-strong);
+  --c-rule:var(--sds-border-subtle); --c-fill:var(--sds-bg-subtle); --c-green:var(--sds-status-success-text); --c-link:var(--sds-text-link);
+  --c-signal:var(--sds-interactive-primary); --c-signal-d:var(--sds-interactive-primary-hover); --c-violet:var(--sds-status-info-text);
+  --shadow:0 0 0 1px var(--sds-border-default),0 1px 2px rgba(28,26,23,.04); --float:0 0 0 1px var(--sds-border-default),0 16px 40px -16px rgba(28,26,23,.28);
+  background:var(--sds-bg-page); color:var(--c-ink); font-family:var(--font); font-size:14px; line-height:24px;
+}
+html,body{background:var(--sds-bg-page)}
+.app{grid-template-columns:minmax(0,1fr)} .app > *{grid-column:1;min-width:0}
+.stage code,.qcode{font-family:var(--mono)}
+.chart text,.tlv text{font-family:var(--font)}
+
+/* header */
+.appbar{height:56px;padding:0 24px;gap:24px;border-bottom:1px solid var(--edge);background:var(--c-bg);font-size:14px;color:var(--c-3)}
+.appbar .mark i{width:24px;height:24px;border-radius:6px;background:var(--navy);box-shadow:none}
+.appbar .biz{font-size:14px}
+.appbar .nav{gap:4px;padding:0;background:none;border-radius:0;font-size:14px;color:var(--sds-nav-item-text)}
+.appbar .nav span,.appbar .nav b{padding:4px 12px;border-radius:8px;line-height:24px}
+.appbar .nav b{font-weight:600;background:var(--sds-nav-item-active-bg);color:var(--sds-nav-item-active-text);box-shadow:none}
+.appbar .ctx{font-size:14px;color:var(--c-3)}
+
+/* the home: the briefing, open on the page */
+.s-search{padding:32px 0 40px}
+.home{width:min(960px,100%);padding:0 32px;gap:24px}
+.byline{font-size:14px;color:var(--c-2);gap:12px}
+.bh{font-size:32px;line-height:40px;letter-spacing:-.02em;color:var(--voice);max-width:30ch;margin:0}
+.bh b{color:var(--c-ink)}
+.hero{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:0 32px;background:none;border-radius:0;box-shadow:none;overflow:visible}
+.hero .hl{padding:0}
+.hero .k{font-size:14px;line-height:24px;color:var(--c-2)}
+.hero .hv{font-size:48px;font-weight:300;line-height:48px;letter-spacing:-.03em;margin:8px 0}
+.hero .hd{font-size:14px;line-height:24px;color:var(--c-2)}
+.hero .hspark{width:100%;height:72px;margin:16px 0 0}
+.hspark .sb{fill:var(--sds-chart-3)} .hspark .sb.now{fill:var(--sds-chart-1)}
+.hero .hr{border-left:1px solid var(--c-rule);padding-left:32px}
+.hero .hr > div{padding:16px 0;border-top:1px solid var(--c-rule);gap:0}
+.hero .hr > div:first-child{border-top:0;padding-top:0}
+.hero .vv{font-size:28px;font-weight:300;line-height:32px;letter-spacing:-.02em}
+.hero .n{font-size:14px;line-height:24px;color:var(--c-3)}
+.hero .up,.kpi .up{color:var(--sds-status-success-text)} .hero .dn,.kpi .dn{color:var(--sds-status-error-text)}
+.reply{min-height:56px;border-radius:12px;padding:8px 8px 8px 20px;font-size:14px;color:var(--c-3);box-shadow:none;background:var(--c-bg)}
+.reply .rin{line-height:24px}
+.rparse,.sugg{font-size:14px;padding-left:40px}
+.asksec{padding-bottom:24px}
+.send,.reply .send,.composer .send{width:40px;height:40px;border-radius:10px;background:var(--c-4);box-shadow:none}
+.send.ready,.reply .send.await,.composer .send.await,.working .send{background:var(--navy)!important}
+.reply .send.await:hover,.composer .send.await:hover{background:var(--sds-interactive-primary-hover)!important}
+.send svg{width:16px;height:16px}
+/* insights: questions you can click, open on the page; a tint on hover */
+.insg{gap:8px 16px;margin:0 -16px}
+.insg .card{padding:16px;border-radius:12px;background:none;box-shadow:none;gap:4px}
+.insg .card:hover,.insg .card:focus-visible{translate:none;background:var(--sds-color-warm-gray-050);box-shadow:none}
+.insg .lead{padding:16px}
+.insg .lab{font-size:14px;line-height:24px;color:var(--c-2)}
+.insg .num{font-size:28px;font-weight:300;line-height:32px;letter-spacing:-.02em;margin-top:4px}
+.insg .lead .num{font-size:48px;line-height:48px;letter-spacing:-.03em;margin-top:8px}
+.insg .num.g{color:var(--sds-status-success-text)}
+.insg .say,.insg .lead .say{font-size:14px;line-height:24px;color:var(--voice);max-width:44ch;margin-top:4px}
+.who3{margin:16px 0;font-size:14px}
+.who3 div{padding:12px 0;font-size:14px;line-height:24px;border-top:1px solid var(--c-rule)}
+.who3 .more{color:var(--c-3)}
+.insg .card:not(.lead) .num{padding-top:16px}
+
+/* the answer: open turns */
+.s-answer{padding:32px 0 40px}
+.col{width:min(960px,100%);padding:0 32px}
+.s-answer .col{gap:24px 32px}
+.qtitle,.qtitle.small{font-size:28px;font-weight:600;line-height:32px;letter-spacing:-.02em}
+.trace{font-size:14px;line-height:24px;color:var(--c-2)}
+.trace .step{grid-template-columns:16px minmax(0,1fr) auto;gap:12px;padding:4px 0}
+.tick path{stroke:var(--sds-status-success-strong)}
+.summary{font-size:14px;line-height:24px;color:var(--c-3);gap:8px 12px}
+.steps{height:auto;padding:0;border-radius:0;background:none!important;font-size:14px;font-weight:400;color:var(--c-2);border-bottom:1px dotted var(--c-3)}
+.steps .pm{display:none}
+.summary > span:not(.steps){flex:1;min-width:0}
+.summary .aimark{flex:none}
+.qcode{font-size:14px;line-height:24px;background:var(--sds-bg-subtle);border-radius:8px;padding:16px}
+.lead{font-size:17px;line-height:28px;color:var(--voice);max-width:62ch}
+.lead b{color:var(--c-ink);font-weight:600}
+/* the figure and its causes, on the page */
+.figure{padding:0;background:none;border-radius:0;box-shadow:none;gap:8px;align-content:start}
+.figure .k{font-size:14px;line-height:24px;color:var(--c-3)}
+.figure .big{font-size:48px;font-weight:300;line-height:48px;letter-spacing:-.03em}
+.figure .d{font-size:14px;line-height:24px;color:var(--c-2)}
+.split .track{height:16px;gap:4px} .split .track i{border-radius:4px}
+.split .s1{background:var(--sds-chart-1)} .split .s2{background:var(--sds-chart-2)} .split .s3{background:var(--sds-chart-3)}
+.cause{padding:12px 0;border-top:1px solid var(--c-rule)}
+.cause i{width:10px;height:10px;border-radius:3px}
+.cause:nth-child(1) i{background:var(--sds-chart-1)!important} .cause:nth-child(2) i{background:var(--sds-chart-2)!important} .cause:nth-child(3) i{background:var(--sds-chart-3)!important}
+.cause .t,.cause .v{font-size:14px;line-height:24px}
+.cause .t em{font-size:14px;line-height:24px;color:var(--c-3)}
+.cause .t .g{color:var(--sds-status-success-text)}
+#chartsec{padding:0;background:none;border-radius:0;box-shadow:none;gap:16px}
+#chartsec h4,.sec h4{font-size:17px;line-height:24px;font-weight:600;flex-wrap:wrap;gap:0 16px}
+.sec h4 span{font-size:14px;line-height:24px;color:var(--c-3)}
+/* weekly payouts: HTML bars from zero */
+.wb{display:grid;grid-template-columns:48px minmax(0,1fr);grid-template-rows:200px auto;gap:8px 8px;padding-top:24px}
+.wy{position:relative;grid-row:1;color:var(--sds-chart-axis-label)}
+.wy span{position:absolute;right:0;transform:translateY(50%);line-height:24px}
+.wplot{position:relative;grid-row:1;grid-column:2;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;align-items:end}
+.wplot .gl{position:absolute;left:0;right:0;border-top:1px dotted var(--sds-chart-grid)}
+.wplot .gl.base{border-top:1px solid var(--sds-border-default)}
+.wplot .avg{position:absolute;left:0;right:0;border-top:1.5px dashed var(--sds-chart-2);z-index:1;pointer-events:none;opacity:0;transition:opacity .5s var(--ease) .8s}
+.wplot .avg span{position:absolute;left:0;bottom:4px;line-height:24px;color:var(--c-2);background:var(--c-bg);padding-right:8px}
+.chart.in .avg{opacity:1}
+.wc{position:relative;height:100%;display:flex;align-items:flex-end;outline:none}
+.wbar{position:relative;width:100%;height:0;border-radius:4px 4px 0 0;background:var(--sds-chart-3);transition:height .8s var(--ease-out)}
+.wc.now .wbar{background:var(--sds-chart-1)}
+.wbar .wv{position:absolute;left:0;right:0;top:8px;text-align:center;font-weight:600;line-height:24px;color:var(--sds-text-on-primary);white-space:nowrap;opacity:0;transition:opacity .4s var(--ease)}
+.chart.done .wbar .wv{opacity:1}
+.wplot .avg{font-style:normal}
+.trace-wrap[hidden]{display:none}
+/* one column, as in the onboarding turns */
+.s-answer .col{grid-template-columns:minmax(0,1fr)}
+.s-answer .col > #figure,.s-answer .col > #chartsec{grid-column:1}
+#chartsec{padding-top:8px}
+.wrec{position:absolute;left:0;right:0;border:1.5px dashed var(--sds-status-success-strong);border-bottom:0;border-radius:4px 4px 0 0;background:var(--sds-status-success-bg);transform:scaleY(0);transform-origin:50% 100%;transition:transform .7s var(--ease-out)}
+.chart.rec .wrec{transform:none}
+.wrec .wl{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 4px);font-weight:600;color:var(--sds-status-success-text);line-height:24px;white-space:nowrap}
+.wc .tip{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);z-index:3;display:grid;padding:8px 12px;border-radius:8px;background:var(--sds-chart-tooltip-bg);color:var(--sds-chart-tooltip-text);line-height:20px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s}
+.wc .tip b{font-weight:600}
+.wc:nth-of-type(-n+2) .tip{left:0;transform:none} .wc:nth-last-of-type(-n+2) .tip{left:auto;right:0;transform:none}
+.chart.done .wc:hover .tip,.chart.done .wc:focus-visible .tip{opacity:1}
+.chart.done .wc:hover .wbar{background:var(--sds-chart-2)} .chart.done .wc.now:hover .wbar{background:var(--sds-chart-1)}
+.wx{grid-column:2;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;color:var(--sds-chart-axis-label);text-align:center;line-height:24px;white-space:nowrap}
+.wb .wc.now .tip{display:none}
+/* the prepared action: the one surface in the turn, with the Ring */
+.prepared{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 32px;align-items:center;padding:24px;border-radius:12px;box-shadow:none;background:var(--c-bg)}
+.prepared .k{grid-column:1;font-size:14px;line-height:24px;color:var(--c-3);gap:12px}
+.prepared .w{grid-column:1;font-size:22px;font-weight:600;line-height:32px;letter-spacing:-.015em}
+.prepared .row{display:contents}
+.prepared .m{grid-column:1;font-size:14px;line-height:24px;color:var(--c-2)} .prepared .m b{color:var(--c-ink)}
+.prepared .acts{grid-column:2;grid-row:1/4}
+.prepared.ring::before{opacity:.24;inset:6px 12px;filter:blur(16px)}
+.prepared.sent{background:var(--sds-bg-subtle);box-shadow:none}
+.prepared.sent::after{background:var(--sds-bg-subtle)!important;border-color:transparent!important;animation:none}
+.prepared.sent .k{color:var(--sds-status-success-text)}
+.btn,.insg .lead .btn{height:48px;padding:0 24px;border-radius:10px;font-size:15px;font-weight:600;background:var(--navy);color:var(--sds-text-on-primary);box-shadow:none}
+.insg .lead .btn{height:40px;padding:0 16px;font-size:14px;margin-top:8px}
+.btn:hover{background:var(--sds-interactive-primary-hover)}
+.btn:disabled{background:var(--sds-border-strong)}
+.tonal{height:40px;padding:0 16px;border-radius:10px;font-size:14px;font-weight:600;background:var(--sds-interactive-secondary);color:var(--c-ink);box-shadow:inset 0 0 0 1px var(--sds-interactive-secondary-border)}
+.tonal:hover{background:var(--sds-color-warm-gray-050)}
+.tonal:disabled{background:var(--sds-bg-subtle);color:var(--c-3);box-shadow:none}
+/* asks: a label in the voice and chips */
+.recs{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.recs .k{display:flex;align-items:center;gap:12px;margin-right:4px;font-size:14px;line-height:24px;color:var(--voice)}
+.chip{display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:10px;border:0;font:inherit;font-size:14px;font-weight:600;background:var(--c-bg);color:var(--navy);box-shadow:inset 0 0 0 1px var(--sds-color-blue-200);cursor:pointer;white-space:nowrap}
+.chip:hover,.chip.await:hover{background:var(--sds-color-warm-gray-050)}
+.sources{display:none!important}
+.recs.done .chip{color:var(--c-3);box-shadow:inset 0 0 0 1px var(--c-rule);pointer-events:none}
+/* turns 2 and 3 */
+.turn.on{gap:24px;padding-top:48px;margin-top:24px;border-top:1px solid var(--c-rule)}
+.tabs{gap:4px;padding:0;background:none;border-radius:0;font-size:14px}
+.tabs span{padding:4px 12px;border-radius:8px;line-height:24px;color:var(--c-2)}
+.tabs .on{background:var(--sds-nav-item-active-bg);color:var(--sds-nav-item-active-text);font-weight:600;box-shadow:none}
+.paycard{padding:0;background:none;border-radius:0;box-shadow:none;gap:16px}
+.pays{font-size:14px}
+.pays th{font-size:14px;line-height:24px;color:var(--c-3);padding:0 16px 8px 0;border-bottom:1px solid var(--c-rule)}
+.pays td{height:48px;padding:0 16px 0 0;border-bottom:1px solid var(--c-rule)}
+.pays td.c2{color:var(--c-2)}
+.cb{width:18px;height:18px;border-radius:4px;box-shadow:inset 0 0 0 1.5px var(--sds-border-strong)}
+tr.sel .cb{background:var(--navy)}
+.tfoot{font-size:14px;line-height:24px;color:var(--c-3)}
+.receipt{padding:0;background:none;border-radius:0;box-shadow:none;gap:8px}
+.receipt .k{font-size:14px;line-height:24px;color:var(--sds-status-success-text)}
+.receipt .w{font-size:17px;font-weight:600;line-height:24px}
+.receipt .prog{height:8px;border-radius:4px;background:var(--sds-chart-grid);margin:8px 0}
+.receipt .prog i{background:var(--sds-status-success-strong);border-radius:4px}
+.receipt .row{font-size:14px;line-height:24px;gap:8px 24px;align-items:center}
+/* the bar */
+.composer{padding:16px 24px 24px}
+.assist{width:min(896px,100%)}
+.composer .box{min-height:56px;border-radius:12px;padding:8px 8px 8px 20px;gap:16px;font-size:14px;color:var(--c-2);box-shadow:none;background:var(--c-bg)}
+.composer .box.suggest #ctext{color:var(--voice)}
+.composer .tabk{font-size:14px;height:24px;line-height:24px;padding:0 8px;color:var(--c-3);background:var(--sds-bg-subtle);box-shadow:none}
+.parse{font-size:14px;line-height:24px;color:var(--c-3)}
+/* the platform's sheet: no AI styling */
+.scrim{background:rgba(28,26,23,.32)}
+.sheet,.stage .sheet{border-radius:16px 16px 0 0;padding:24px;gap:16px;box-shadow:var(--float)}
+.sheet .k{font-size:14px;line-height:24px;color:var(--c-3)}
+.sheet h5{font-size:22px;line-height:32px}
+.sheet .big{font-size:40px;font-weight:300;line-height:48px;letter-spacing:-.03em}
+.sheet .r{font-size:14px;line-height:24px;padding:12px 0}
+.sheet .acts{gap:12px}
+.sheet .note{font-size:14px;line-height:24px;color:var(--c-3)}
+@container (min-width:601px){.sheet,.stage .sheet{border-radius:16px}}
+/* phone */
+@container (max-width:600px){
+  .appbar{padding:0 16px}
+  .home{padding:0 16px;gap:16px}
+  .bh{font-size:24px;line-height:32px}
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .hero .hv{font-size:40px;line-height:48px}
+  .hero .hr{border-left:0;padding-left:0;margin-top:16px;border-top:1px solid var(--c-rule);grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .hero .hr > div{border-top:0;border-left:0;padding:12px 0 0}
+  .hero .hr > div:first-child{padding-top:12px}
+  .hero .vv{font-size:20px;line-height:28px}
+  .rparse,.sugg{padding-left:16px}
+  .insg{margin:0 -8px} .insg .card,.insg .lead{padding:8px}
+  .insg .lead .num{font-size:40px}
+  .col{padding:0 16px}
+  .s-answer{padding-top:24px}
+  .s-answer .col{gap:16px}
+  .qtitle,.qtitle.small{font-size:22px;line-height:28px}
+  .lead{font-size:16px;line-height:24px}
+  .figure .big{font-size:40px}
+  .prepared{grid-template-columns:minmax(0,1fr);padding:16px}
+  .prepared .acts{grid-column:1;grid-row:auto;margin-top:8px}
+  .turn.on{padding-top:32px;margin-top:8px}
+  .wb{grid-template-columns:40px minmax(0,1fr);grid-template-rows:160px auto}
+  .wplot,.wx{gap:4px}
+  .wplot .avg span{display:none}
+  .wbar .wv{display:none}
+  .wrec .wl{left:auto;right:0;transform:none}
+  .composer{padding:12px 16px 16px}
+  .sheet .big{font-size:32px}
+}
+</style>
 
 </head>
 <body>
@@ -701,6 +1127,18 @@ payments     where status = declined and decline_code = authentication_required<
 
           <p class="lead" id="lead">Payouts were <b>$38,420.00</b> this week, $8,490.00 less than last week. Three things explain all of it, and about half can be recovered today.</p>
 
+          <div class="prepared ring reveal" id="prepared">
+            <span class="k"><i></i>Waiting for your approval</span>
+            <span class="w">Retry the 19 declined payments</span>
+            <div class="row">
+              <span class="m"><b>$4,212.00</b> · each customer gets a short 3-D Secure prompt</span>
+              <div class="acts"><button class="btn" type="button" id="review">Review and retry</button></div>
+            </div>
+          </div>
+
+          <div class="recs reveal" id="next"><span class="k"><i class="aimark"></i>Before you decide</span><button type="button" class="chip" data-ask>Show me the declined ones</button></div>
+          <div class="sources reveal" id="sources"></div>
+
           <div class="figure reveal" id="figure">
             <div class="grid2">
               <div style="display:grid;gap:6px">
@@ -720,22 +1158,11 @@ payments     where status = declined and decline_code = authentication_required<
           </div>
 
           <div class="sec reveal" id="chartsec">
-            <h4>Payouts, last 8 weeks <span>Dashed: what retrying would recover</span></h4>
+            <h4>Payouts, last 8 weeks <span>dashed line: the 7-week average, $44,096 · green: what retrying recovers</span></h4>
             <div class="chart" id="chart"></div>
           </div>
 
-          <div class="prepared ring reveal" id="prepared">
-            <span class="k"><i></i>Waiting for your approval</span>
-            <span class="w">Retry the 19 declined payments</span>
-            <div class="row">
-              <span class="m"><b>$4,212.00</b> · each customer gets a short 3-D Secure prompt</span>
-              <div class="acts"><button class="btn" type="button" id="review">Review and retry</button></div>
-            </div>
-          </div>
 
-          <div class="sources reveal" id="sources"></div>
-
-          <div class="next reveal" id="next"><span>Show me the declined ones</span><span>When will the disputes be decided?</span></div>
 
           <!-- TURN 2 -->
           <div class="turn" id="turn2">
@@ -746,12 +1173,12 @@ payments     where status = declined and decline_code = authentication_required<
             </div></div>
             <div class="summary" id="sum2"><i class="aimark"></i><span>Filtered the 19 declined payments and checked each card's bank</span><span class="steps">2 steps</span></div>
             <p class="lead" id="lead2">These are the 19 payments Westmoor Bank declined with “authentication required”. Every one can be retried, so I've selected them all.</p>
+            <div class="recs reveal" id="next2"><span class="k"><i class="aimark"></i>Next</span><button type="button" class="chip" data-ask>Retry them</button></div>
             <div class="paycard reveal" id="paycard">
               <div class="tabs"><span class="on">All 19</span><span>Over $200</span><span>Repeat customers</span></div>
               <table class="pays"><thead><tr><th style="width:30px"></th><th>Customer</th><th class="hm">Declined</th><th class="hm">Card</th><th class="num">Amount</th></tr></thead><tbody id="paybody"></tbody></table>
               <div class="tfoot"><span>11 more · $1,815.20</span><b id="selsum">0 selected</b></div>
             </div>
-            <div class="next reveal" id="next2"><span>Retry them</span><span>Email these customers before retrying</span></div>
           </div>
 
           <!-- TURN 3 -->
@@ -818,69 +1245,33 @@ payments     where status = declined and decline_code = authentication_required<
   var NS="http://www.w3.org/2000/svg";
   function el(t,a,txt){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e;}
   var CH={};
+  /* weekly payouts as bars from zero, in HTML so every label stays its true size. This week's bar is navy; the 4,212 that
+     retrying would recover rises above it, dashed, and its label counts up. A dashed line marks the 7-week average. */
   function buildChart(){
     var host=$("chart"); host.innerHTML=""; host.classList.remove("in","done","rec","hov");
-    var w=stage.dataset.device==="mobile"?600:520,h=stage.dataset.device==="mobile"?260:250,L=40,R=112,T=16,B=28,cw=w-L-R,ch=h-T-B,base=T+ch,MAX=50000,MIN=30000;
-    function y(v){return base-(v-MIN)/(MAX-MIN)*ch;}
-    var svg=el("svg",{viewBox:"0 0 "+w+" "+h,role:"img","aria-label":"Weekly payouts for eight weeks. This week $38,420, down from $46,910. Retrying the declined payments would recover $4,212."});
-    var defs=el("defs",{});
-    var ag=el("linearGradient",{id:"ca",x1:0,y1:0,x2:0,y2:1}); ag.appendChild(el("stop",{offset:0,"stop-color":"#3144B7","stop-opacity":.2})); ag.appendChild(el("stop",{offset:1,"stop-color":"#3144B7","stop-opacity":0})); defs.appendChild(ag);
-    var lg=el("linearGradient",{id:"cl",x1:0,y1:0,x2:1,y2:0}); lg.appendChild(el("stop",{offset:0,"stop-color":"#9EAAFC"})); lg.appendChild(el("stop",{offset:.55,"stop-color":"#3144B7"})); lg.appendChild(el("stop",{offset:1,"stop-color":"#3144B7"})); defs.appendChild(lg);
-    var rg=el("linearGradient",{id:"cr",x1:0,y1:1,x2:0,y2:0}); rg.appendChild(el("stop",{offset:0,"stop-color":"#3F7A33","stop-opacity":.05})); rg.appendChild(el("stop",{offset:1,"stop-color":"#3F7A33","stop-opacity":.3})); defs.appendChild(rg);
-    svg.appendChild(defs);
-    [30000,40000,50000].forEach(function(v,i){ var g=el("line",{x1:L,x2:L+cw+14,y1:y(v),y2:y(v),class:"grid"}); g.style.transitionDelay=(i*80)+"ms"; svg.appendChild(g); var t=el("text",{x:L-10,y:y(v)+4,"text-anchor":"end",class:"ax"},"$"+v/1000+"k"); t.style.transitionDelay=(i*80)+"ms"; svg.appendChild(t); });
-    var n=W.length,slot=cw/(n-1);
-    var pts=W.map(function(d,i){return [L+slot*i,y(d[1])];});
-    var path="M"+pts.map(function(p){return p[0].toFixed(1)+","+p[1].toFixed(1);}).join(" L");
-    svg.appendChild(el("path",{d:path+" L"+(L+cw)+","+base+" L"+L+","+base+" Z",class:"area",fill:"url(#ca)"}));
-    var avg=W.slice(0,7).reduce(function(s,d){return s+d[1];},0)/7;
-    svg.appendChild(el("line",{x1:L,x2:L+cw,y1:y(avg),y2:y(avg),class:"avg"}));
-    svg.appendChild(el("text",{x:L+4,y:y(avg)-8,class:"lab a"},"7-week average $44,096"));
-    var lp=pts[n-1], ry=y(W[n-1][1]+4212);
-    svg.appendChild(el("rect",{x:lp[0]-10,y:ry,width:20,height:lp[1]-ry,rx:4,class:"band",fill:"url(#cr)"}));
-    svg.appendChild(el("line",{x1:lp[0],x2:lp[0],y1:ry+5,y2:lp[1]-6,class:"rec"}));
-    var line=el("path",{d:path,class:"line"}); svg.appendChild(line);
-    var cum=[0]; for(var i=1;i<n;i++){ cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1])); }
-    var dots=pts.slice(0,n-1).map(function(p){ var c=el("circle",{cx:p[0],cy:p[1],r:3.25,class:"pt"}); svg.appendChild(c); return c; });
-    svg.appendChild(el("circle",{cx:lp[0],cy:lp[1],r:5,class:"halo"}));
-    svg.appendChild(el("circle",{cx:lp[0],cy:lp[1],r:5,class:"dot"}));
-    svg.appendChild(el("circle",{cx:lp[0],cy:ry,r:4,class:"recdot"}));
-    var head=el("circle",{cx:pts[0][0],cy:pts[0][1],r:5,class:"head"}); svg.appendChild(head);
-    svg.appendChild(el("text",{x:lp[0]+14,y:lp[1]+4,class:"lab k"},"$38,420"));
-    var rl=el("text",{x:lp[0]+14,y:ry+4,class:"lab g"},"+$4,212"); svg.appendChild(rl);
-    W.forEach(function(d,i){ if(i%2===1||i===n-1){ var t=el("text",{x:pts[i][0],y:h-4,"text-anchor":"middle",class:"ax"},d[0]); t.style.transitionDelay=(200+i*40)+"ms"; svg.appendChild(t); } });
-    /* hover: a guide and a tooltip for any week */
-    var guide=el("line",{x1:0,x2:0,y1:T,y2:base,class:"guide"}); svg.appendChild(guide);
-    var tip=el("g",{class:"tip"}); var tr=el("rect",{x:0,y:0,width:10,height:40,rx:6}); var t1=el("text",{x:10,y:16}); var t2=el("text",{x:10,y:32,class:"tv"}); tip.appendChild(tr); tip.appendChild(t1); tip.appendChild(t2); svg.appendChild(tip);
-    var hit=el("rect",{x:L-slot/2,y:0,width:cw+slot,height:h,class:"hit"}); svg.appendChild(hit);
-    function hover(e){ if(!host.classList.contains("done")) return; var pt=svg.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY; var p=pt.matrixTransform(svg.getScreenCTM().inverse()); var i=Math.max(0,Math.min(n-1,Math.round((p.x-L)/slot)));
-      guide.setAttribute("x1",pts[i][0]); guide.setAttribute("x2",pts[i][0]);
-      t1.textContent="Week of "+W[i][0]; t2.textContent=money(W[i][1]);
-      var tw=Math.max(t1.getComputedTextLength(),t2.getComputedTextLength())+20, tx=Math.min(Math.max(pts[i][0]-tw/2,0),w-tw), ty=Math.max(pts[i][1]-54,0);
-      tr.setAttribute("width",tw); tip.setAttribute("transform","translate("+tx+","+ty+")"); host.classList.add("hov"); }
-    hit.addEventListener("mousemove",hover); hit.addEventListener("mouseleave",function(){ host.classList.remove("hov"); });
-    host.appendChild(svg);
-    var len=line.getTotalLength(); line.style.strokeDasharray=len; line.style.strokeDashoffset=len;
-    CH={line:line,len:len,cum:cum,dots:dots,head:head,host:host,rl:rl};
+    var MAX=60000, n=W.length, avg=W.slice(0,7).reduce(function(s,d){return s+d[1];},0)/7, pct=function(v){ return (100*v/MAX).toFixed(2)+"%"; };
+    var cols=W.map(function(d,i){ var last=i===n-1;
+      return '<div class="wc'+(last?' now':'')+'" tabindex="0" aria-label="Week of '+d[0]+', '+money(d[1])+'">'
+        +'<div class="wbar" data-h="'+pct(d[1])+'" style="transition-delay:'+(i*70)+'ms">'+(last?'<span class="wv">$38,420</span>':'')+'</div>'
+        +(last?'<div class="wrec" style="bottom:'+pct(d[1])+';height:'+pct(4212)+'"><span class="wl" id="reclab">+$4,212</span></div>':'')
+        +'<span class="tip">'+d[0]+'<b>'+money(d[1])+'</b></span></div>' }).join('');
+    host.innerHTML='<div class="wb" role="img" aria-label="Weekly payouts for eight weeks. This week $38,420, down from $46,910. Retrying the declined payments would recover $4,212.">'
+      +'<div class="wy"><span style="bottom:100%">$60k</span><span style="bottom:50%">$30k</span><span style="bottom:0">$0</span></div>'
+      +'<div class="wplot"><i class="gl" style="bottom:100%"></i><i class="gl" style="bottom:50%"></i><i class="gl base" style="bottom:0"></i>'
+      +'<i class="avg" style="bottom:'+pct(avg)+'"></i>'+cols+'</div>'
+      +'<div class="wx">'+W.map(function(d,i){ return '<span>'+(i%2===1||i===n-1?d[0]:'')+'</span>' }).join('')+'</div></div>';
+    CH={host:host, rl:$("reclab")};
   }
-  /* the line draws itself with a lit head; each week's point pops as the head passes it; then the recoverable band rises and its label counts up */
   function drawChart(ctx){
     var c=CH; c.host.classList.add("in");
-    function finish(){ c.line.style.strokeDashoffset=0; c.dots.forEach(function(d){d.classList.add("on");}); c.head.classList.remove("on"); c.host.classList.add("done","rec"); c.rl.textContent="+$4,212 recoverable"; }
+    var bars=c.host.querySelectorAll(".wbar");
+    function grow(){ bars.forEach(function(b){ b.style.height=b.dataset.h; }); }
+    function finish(){ grow(); c.host.classList.add("done","rec"); c.rl.textContent="+$4,212"; }
     if(ctx.fast){ finish(); return Promise.resolve(); }
     return new Promise(function(res,rej){
-      var t0=performance.now()+250, d=1900; c.head.classList.add("on");
-      (function tick(t){
-        if(ctx.tok!==run){ rej("cancel"); return; }
-        var p=Math.max(0,Math.min(1,(t-t0)/d)), e=1-Math.pow(1-p,3), at=c.len*e;
-        c.line.style.strokeDashoffset=c.len-at;
-        var hp=c.line.getPointAtLength(at); c.head.setAttribute("cx",hp.x); c.head.setAttribute("cy",hp.y);
-        c.dots.forEach(function(dt,i){ if(c.cum[i]<=at+0.5) dt.classList.add("on"); });
-        if(p<1){ requestAnimationFrame(tick); return; }
-        c.head.classList.remove("on"); c.host.classList.add("done");
-        setTimeout(function(){ if(ctx.tok!==run) return; c.host.classList.add("rec");
-          var s0=performance.now()+500; (function cnt(t){ if(ctx.tok!==run) return; var q=Math.max(0,Math.min(1,(t-s0)/800)), v=Math.round(4212*(1-Math.pow(1-q,3))); c.rl.textContent="+$"+v.toLocaleString("en-US")+(q>=1?" recoverable":""); if(q<1) requestAnimationFrame(cnt); else res(); })(performance.now()); },350);
-      })(performance.now());
+      requestAnimationFrame(function(){ grow();
+        setTimeout(function(){ if(ctx.tok!==run){ rej("cancel"); return; } c.host.classList.add("done","rec");
+          var s0=performance.now()+400; (function cnt(t){ if(ctx.tok!==run) return; var q=Math.max(0,Math.min(1,(t-s0)/800)), v=Math.round(4212*(1-Math.pow(1-q,3))); c.rl.textContent="+$"+v.toLocaleString("en-US"); if(q<1) requestAnimationFrame(cnt); else res(); })(performance.now()); },1300); });
     });
   }
 
@@ -913,7 +1304,7 @@ payments     where status = declined and decline_code = authentication_required<
     await wait(ctx,1400);
     var tw=$(wrapId); tw.style.height=tw.offsetHeight+"px"; await frame(); tw.style.height="0px";
     if(sumId) $(sumId).classList.add("in");
-    await wait(ctx,450);
+    await wait(ctx,450); tw.hidden=true;
   }
   function flipTo(ctx,srcEl,title){
     var from=srcEl.getBoundingClientRect(), fs=parseFloat(getComputedStyle(srcEl).fontSize);
@@ -954,9 +1345,9 @@ payments     where status = declined and decline_code = authentication_required<
   function suggest(t){ var ct=$("ctext"); ct.textContent=t; ct.style.color=""; $("csend").style.background=""; $("cbox").classList.add("suggest"); }
   async function accept(ctx){ $("cbox").classList.remove("suggest"); $("ctext").style.color="var(--c-ink)"; $("csend").style.background="var(--c-ink)"; await wait(ctx,450); }
   function clearComposer(){ $("cbox").classList.remove("suggest"); var ct=$("ctext"); ct.textContent=stage.dataset.state==="answer"?"Ask a follow-up":HOMEPH; ct.style.color=""; $("csend").style.background=""; }
-  function buildSpark(){ var sv=$("spark"); if(!sv||sv.childNodes.length) return; var w=560,h=96,mn=36000,mx=48000; var p=W.map(function(d,i){return [i*w/7,h-6-(d[1]-mn)/(mx-mn)*(h-18)];}); var d="M"+p.map(function(q){return q[0].toFixed(1)+","+q[1].toFixed(1);}).join(" L");
-    var defs=el("defs",{}), g=el("linearGradient",{id:"hsg",x1:0,y1:0,x2:0,y2:1}); g.appendChild(el("stop",{offset:0,"stop-color":"#3144B7","stop-opacity":.22})); g.appendChild(el("stop",{offset:1,"stop-color":"#3144B7","stop-opacity":0})); defs.appendChild(g); sv.appendChild(defs);
-    sv.appendChild(el("path",{d:d+" L"+w+","+h+" L0,"+h+" Z",fill:"url(#hsg)"})); sv.appendChild(el("path",{d:d,fill:"none",stroke:"#3144B7","stroke-width":2,"vector-effect":"non-scaling-stroke","stroke-linejoin":"round"})); }
+  /* the hero's eight weeks: bars from zero, this week in navy */
+  function buildSpark(){ var sv=$("spark"); if(!sv||sv.childNodes.length) return; var w=560,h=96,mx=50000,gap=10,bw=(w-gap*7)/8;
+    W.forEach(function(d,i){ var bh=(d[1]/mx)*(h-4); sv.appendChild(el("rect",{x:(i*(bw+gap)).toFixed(1),y:(h-bh).toFixed(1),width:bw.toFixed(1),height:bh.toFixed(1),rx:3,class:i===W.length-1?"sb now":"sb"})); }); }
 
   var PAY=[["Orchard Lane Café","17 Nov","4471",312.40],["Pell & Daughters","17 Nov","0932",189.00],["Norrow Bakehouse","18 Nov","7710",455.75],["Kite Street Deli","18 Nov","2286",98.20],["Ashby Market","19 Nov","5103",260.00],["Larch Hotel Group","19 Nov","6648",731.10],["Fenwick Florists","20 Nov","3390",144.85],["Marlow Provisions","21 Nov","8821",205.50]];
   function fillPays(){
@@ -975,7 +1366,7 @@ payments     where status = declined and decline_code = authentication_required<
     $("rtext").textContent="Reply to this briefing, or ask about anything"; $("rsend").style.background=""; $("rparse").classList.remove("in");
     document.querySelector(".home").classList.remove("lit"); document.querySelectorAll(".gapv .gt i").forEach(function(i){ i.style.width="0"; });
     document.querySelectorAll(".trace .step").forEach(function(s){s.classList.remove("in","done");s.querySelector(".ic").innerHTML='<span class="spin"></span>';});
-    ["tracewrap","tw2","tw3"].forEach(function(id){$(id).style.height="";});
+    ["tracewrap","tw2","tw3"].forEach(function(id){$(id).style.height=""; $(id).hidden=false;});
     ["summary","sum2"].forEach(function(id){$(id).classList.remove("in");}); $("qcode").classList.remove("open");
     ["lead","lead2","lead3"].forEach(splitLead); document.querySelectorAll(".lead .w").forEach(function(w){w.classList.remove("in");});
     $("turn2").classList.remove("on"); $("turn3").classList.remove("on");
@@ -984,7 +1375,7 @@ payments     where status = declined and decline_code = authentication_required<
     $("progfill").style.width="0"; $("authn").textContent="0 of 19"; $("recov").textContent="$0.00";
     $("cancelretry").innerHTML='Cancel the rest · <span id="cd">10:00</span>'; $("cancelretry").disabled=false;
     $("confirmbtn").classList.remove("hint"); $("review3").disabled=false; $("prep3").classList.remove("sent"); $("prep3k").innerHTML="<i></i>Waiting for your approval";
-    document.querySelectorAll(".reveal").forEach(function(r){r.classList.remove("in");});
+    document.querySelectorAll(".reveal").forEach(function(r){r.classList.remove("in");}); ["next","next2"].forEach(function(id){ $(id).classList.remove("done"); });
     document.querySelectorAll(".split .track i").forEach(function(i){i.style.width="0";});
     document.querySelectorAll(".cause").forEach(function(c){c.classList.remove("in");});
     $("bignum").textContent=money(46910);
@@ -1035,6 +1426,11 @@ payments     where status = declined and decline_code = authentication_required<
     var words=document.querySelectorAll("#lead .w");
     for(var i=0;i<words.length;i++){ words[i].classList.add("in"); if(!ctx.fast && i%1===0) await wait(ctx,28); }
     await wait(ctx,350);
+    var pr=$("prepared"); pr.classList.add("in"); scrollTo(ctx,pr);
+    await wait(ctx,500);
+    $("sources").classList.add("in");
+    var nx=$("next"); nx.classList.add("in");
+    await wait(ctx,450);
     var fig=$("figure"); fig.classList.add("in"); scrollTo(ctx,fig);
     // count down from last week's total
     var big=$("bignum");
@@ -1053,17 +1449,13 @@ payments     where status = declined and decline_code = authentication_required<
     await wait(ctx,250);
     await drawChart(ctx);
     await wait(ctx,250);
-    var pr=$("prepared"); pr.classList.add("in"); scrollTo(ctx,pr);
-    await wait(ctx,500);
-    $("sources").classList.add("in");
-    await wait(ctx,250);
-    var nx=$("next"); nx.classList.add("in"); suggest("Show me the declined ones");
+    suggest("Show me the declined ones");
     ai("land");
   }
 
   async function actDrill(ctx){
     setCh(4);
-    await gate(ctx,$("cbox"));
+    await gate(ctx,[$("cbox")].concat([].slice.call(document.querySelectorAll("#next [data-ask]")))); $("next").classList.add("done");
     await accept(ctx);
     var go=flipTo(ctx,$("ctext"),$("q2"));
     clearComposer();
@@ -1073,7 +1465,7 @@ payments     where status = declined and decline_code = authentication_required<
     await runTrace(ctx,"tw2","sum2",true);
     await words(ctx,"lead2");
     await wait(ctx,300);
-    var pc=$("paycard"); pc.classList.add("in"); scrollTo(ctx,pc);
+    var pc=$("paycard"); pc.classList.add("in"); $("next2").classList.add("in"); scrollTo(ctx,pc);
     var rows=$("paybody").querySelectorAll("tr");
     for(var i=0;i<rows.length;i++){ rows[i].classList.add("in"); await wait(ctx,70); }
     await wait(ctx,350);
@@ -1082,13 +1474,13 @@ payments     where status = declined and decline_code = authentication_required<
     await wait(ctx,200);
     $("selsum").textContent="19 selected · "+money(4212);
     await wait(ctx,400);
-    var n2=$("next2"); n2.classList.add("in"); suggest("Retry them");
+    suggest("Retry them");
     ai("land");
   }
 
   async function actRetry(ctx){
     setCh(5);
-    await gate(ctx,$("cbox"));
+    await gate(ctx,[$("cbox")].concat([].slice.call(document.querySelectorAll("#next2 [data-ask]")))); $("next2").classList.add("done");
     await accept(ctx);
     var go=flipTo(ctx,$("ctext"),$("q3"));
     clearComposer();
@@ -1154,7 +1546,9 @@ payments     where status = declined and decline_code = authentication_required<
   $("showq").addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggleQ(); } });
 
   stage.dataset.device=(window.innerWidth<=600)?"mobile":"desktop";
-  play(reduce?5:1);
+  /* test hook: ?to=N starts at chapter N (1 home · 2 query · 3 answer · 4 drill-down · 5 retry), earlier chapters run instantly */
+  var TO=+((location.search.match(/[?&]to=([1-5])/)||[])[1]||1);
+  play(reduce?5:TO);
 })();
 </script>
 
