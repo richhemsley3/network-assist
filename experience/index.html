@@ -1132,6 +1132,17 @@ tr.sel .cb{background:var(--navy)}
   .home{grid-template-areas:"ph" "bh" "hero" "lead" "i2" "i3" "ask"}
   .home .asksec{margin:0;padding:0 0 32px}
 }
+
+/* ══ the ask sits between the figures and the insights (the decision from the first Network Assist rounds, restored Nov 23).
+   High on the page, easy to see and reach; once the assist is active it travels to the bar at the bottom. ══ */
+.home{grid-template-areas:"ph ph ph" "bh bh bh" "hero hero hero" "ask ask ask" "lead lead i2" "lead lead i3"}
+.home .asksec{margin:0}
+@container (max-width:1100px){
+  .home{grid-template-areas:"ph ph" "bh bh" "hero hero" "ask ask" "lead i2" "lead i3"}
+}
+@container (max-width:600px){
+  .home{grid-template-areas:"ph" "bh" "hero" "ask" "lead" "i2" "i3"}
+}
 </style>
 
 </head>
