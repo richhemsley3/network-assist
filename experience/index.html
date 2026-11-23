@@ -1088,6 +1088,50 @@ tr.sel .cb{background:var(--navy)}
   .insg{margin:0;gap:12px} .insg .card,.insg .lead{padding:16px}
   .figure,#chartsec,.paycard,.receipt{padding:16px}
 }
+
+/* ===================== Home as a normal page (Nov 23, 2026) =====================
+   Home fills the page container, left aligned: a page title, the briefing as the assistant's lead, the ask field, then a
+   three-column card grid (the figures across two columns, the lead insight beside them, the other two insights beneath).
+   Only the conversation uses the centred reading column. */
+.s-search{padding:32px 0 64px}
+.home{width:auto;max-width:1440px;margin:0;padding:0 40px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:start;
+  grid-template-areas:"ph ph ph" "bh bh bh" "ask ask ask" "hero hero lead" "i2 i3 lead"}
+.home .phead{grid-area:ph;display:grid;gap:4px}
+.home .pt{margin:0;font-size:28px;line-height:32px;font-weight:600;letter-spacing:-.02em;color:var(--c-ink)}
+.home .bh{grid-area:bh;margin:-8px 0 0;font-size:22px;line-height:32px;font-weight:400;letter-spacing:-.01em;color:var(--voice);max-width:72ch}
+.home .bh b{font-weight:600;color:var(--c-ink)}
+.home .asksec{grid-area:ask;padding-bottom:24px}
+.home .hero{grid-area:hero;margin:0}
+.insg{display:contents}
+.insg .card.lead{grid-area:lead;align-self:stretch}
+.insg .card:not(.lead):nth-child(2){grid-area:i2;align-self:stretch}
+.insg .card:not(.lead):nth-child(3){grid-area:i3;align-self:stretch}
+.insg .card:not(.lead) .num{margin-top:16px;padding-top:0}
+.stage.typing .insg > *{opacity:.3}
+@container (max-width:1100px){
+  .home{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"ph ph" "bh bh" "ask ask" "hero hero" "lead i2" "lead i3"}
+}
+@container (max-width:600px){
+  .s-search{padding:24px 0 48px}
+  .home{padding:0 16px;gap:16px;grid-template-columns:minmax(0,1fr);grid-template-areas:"ph" "bh" "ask" "hero" "lead" "i2" "i3"}
+  .home .pt{font-size:22px;line-height:28px}
+  .home .bh{font-size:17px;line-height:28px;margin:0}
+}
+
+/* ===================== Reading order (Nov 23, 2026) =====================
+   Read, comprehend, then act. Home: the briefing, the figures and insights, then the ask field, which sticks to the
+   bottom of the window while the data scrolls under it and settles at the end. A turn: the question, the sentence, the
+   evidence, then the prepared action and the asks, just above the pinned bar. */
+.home{grid-template-areas:"ph ph ph" "bh bh bh" "hero hero lead" "i2 i3 lead" "ask ask ask"}
+.home .asksec{position:sticky;bottom:0;z-index:4;margin:0 -40px;padding:16px 40px 40px;background:var(--sds-color-warm-gray-025)}
+.home .rparse{bottom:12px}
+@container (max-width:1100px){
+  .home{grid-template-areas:"ph ph" "bh bh" "hero hero" "lead i2" "lead i3" "ask ask"}
+}
+@container (max-width:600px){
+  .home{grid-template-areas:"ph" "bh" "hero" "lead" "i2" "i3" "ask"}
+  .home .asksec{margin:0 -16px;padding:12px 16px 32px}
+}
 </style>
 
 </head>
@@ -1103,8 +1147,8 @@ tr.sel .cb{background:var(--navy)}
       <div class="view" id="view">
 
         <section class="s-search"><div class="home">
-          <div class="byline"><i class="aimark"></i><span>Your weekly briefing, 16–22 Nov</span></div>
-          <h2 class="bh">Sales were up this week. Payouts were $8,490.00 lower, and about half of that can be recovered today.</h2>
+          <div class="phead"><h1 class="pt">Home</h1><div class="byline"><i class="aimark"></i><span>Your weekly briefing, 16–22 Nov</span></div></div>
+          <p class="bh">Sales were up this week. Payouts were $8,490.00 lower, and about half of that can be recovered today.</p>
           <div class="hero">
             <div class="hl"><span class="k">Paid out this week</span><span class="hv">$38,420.00</span><span class="hd"><span class="dn">−$8,490.00</span> · 18.1% below last week</span><svg class="hspark" id="spark" viewBox="0 0 560 96" preserveAspectRatio="none" aria-hidden="true"></svg></div>
             <div class="hr">
@@ -1159,18 +1203,6 @@ payments     where status = declined and decline_code = authentication_required<
 
           <p class="lead" id="lead">Payouts were <b>$38,420.00</b> this week, $8,490.00 less than last week. Three things explain all of it, and about half can be recovered today.</p>
 
-          <div class="prepared ring reveal" id="prepared">
-            <span class="k"><i></i>Waiting for your approval</span>
-            <span class="w">Retry the 19 declined payments</span>
-            <div class="row">
-              <span class="m"><b>$4,212.00</b> · each customer gets a short 3-D Secure prompt</span>
-              <div class="acts"><button class="btn" type="button" id="review">Review and retry</button></div>
-            </div>
-          </div>
-
-          <div class="recs reveal" id="next"><span class="k"><i class="aimark"></i>Before you decide</span><button type="button" class="chip" data-ask>Show me the declined ones</button></div>
-          <div class="sources reveal" id="sources"></div>
-
           <div class="figure reveal" id="figure">
             <div class="grid2">
               <div style="display:grid;gap:6px">
@@ -1194,6 +1226,18 @@ payments     where status = declined and decline_code = authentication_required<
             <div class="chart" id="chart"></div>
           </div>
 
+          <div class="prepared ring reveal" id="prepared">
+            <span class="k"><i></i>Waiting for your approval</span>
+            <span class="w">Retry the 19 declined payments</span>
+            <div class="row">
+              <span class="m"><b>$4,212.00</b> · each customer gets a short 3-D Secure prompt</span>
+              <div class="acts"><button class="btn" type="button" id="review">Review and retry</button></div>
+            </div>
+          </div>
+
+          <div class="recs reveal" id="next"><span class="k"><i class="aimark"></i>Before you decide</span><button type="button" class="chip" data-ask>Show me the declined ones</button></div>
+          <div class="sources reveal" id="sources"></div>
+
 
 
           <!-- TURN 2 -->
@@ -1205,12 +1249,12 @@ payments     where status = declined and decline_code = authentication_required<
             </div></div>
             <div class="summary" id="sum2"><i class="aimark"></i><span>Filtered the 19 declined payments and checked each card's bank</span><span class="steps">2 steps</span></div>
             <p class="lead" id="lead2">These are the 19 payments Westmoor Bank declined with “authentication required”. Every one can be retried, so I've selected them all.</p>
-            <div class="recs reveal" id="next2"><span class="k"><i class="aimark"></i>Next</span><button type="button" class="chip" data-ask>Retry them</button></div>
             <div class="paycard reveal" id="paycard">
               <div class="tabs"><span class="on">All 19</span><span>Over $200</span><span>Repeat customers</span></div>
               <table class="pays"><thead><tr><th style="width:30px"></th><th>Customer</th><th class="hm">Declined</th><th class="hm">Card</th><th class="num">Amount</th></tr></thead><tbody id="paybody"></tbody></table>
               <div class="tfoot"><span>11 more · $1,815.20</span><b id="selsum">0 selected</b></div>
             </div>
+            <div class="recs reveal" id="next2"><span class="k"><i class="aimark"></i>Next</span><button type="button" class="chip" data-ask>Retry them</button></div>
           </div>
 
           <!-- TURN 3 -->
@@ -1458,11 +1502,6 @@ payments     where status = declined and decline_code = authentication_required<
     var words=document.querySelectorAll("#lead .w");
     for(var i=0;i<words.length;i++){ words[i].classList.add("in"); if(!ctx.fast && i%1===0) await wait(ctx,28); }
     await wait(ctx,350);
-    var pr=$("prepared"); pr.classList.add("in"); scrollTo(ctx,pr);
-    await wait(ctx,500);
-    $("sources").classList.add("in");
-    var nx=$("next"); nx.classList.add("in");
-    await wait(ctx,450);
     var fig=$("figure"); fig.classList.add("in"); scrollTo(ctx,fig);
     // count down from last week's total
     var big=$("bignum");
@@ -1481,6 +1520,10 @@ payments     where status = declined and decline_code = authentication_required<
     await wait(ctx,250);
     await drawChart(ctx);
     await wait(ctx,250);
+    var pr=$("prepared"); pr.classList.add("in"); scrollTo(ctx,pr);
+    await wait(ctx,500);
+    $("sources").classList.add("in");
+    var nx=$("next"); nx.classList.add("in"); scrollTo(ctx,nx);
     suggest("Show me the declined ones");
     ai("land");
   }
@@ -1497,7 +1540,7 @@ payments     where status = declined and decline_code = authentication_required<
     await runTrace(ctx,"tw2","sum2",true);
     await words(ctx,"lead2");
     await wait(ctx,300);
-    var pc=$("paycard"); pc.classList.add("in"); $("next2").classList.add("in"); scrollTo(ctx,pc);
+    var pc=$("paycard"); pc.classList.add("in"); scrollTo(ctx,pc);
     var rows=$("paybody").querySelectorAll("tr");
     for(var i=0;i<rows.length;i++){ rows[i].classList.add("in"); await wait(ctx,70); }
     await wait(ctx,350);
@@ -1506,6 +1549,7 @@ payments     where status = declined and decline_code = authentication_required<
     await wait(ctx,200);
     $("selsum").textContent="19 selected · "+money(4212);
     await wait(ctx,400);
+    var n2=$("next2"); n2.classList.add("in"); scrollTo(ctx,n2);
     suggest("Retry them");
     ai("land");
   }
